@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
 import AnimatedText from '@/app/components/animations/AnimatedText';
 import Header from '@/app/components/Header';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 
 const ScrollAnimations: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedEffect, setSelectedEffect] = useState<
     | 'scrollFade'
     | 'scrollSlide'
@@ -50,182 +51,247 @@ const ScrollAnimations: React.FC = () => {
       | 'orbitTrail';
     text: string;
     description: string;
-    useCases: string[];
-    caseStudy: string;
-    communityExample: string;
+    useCase: {
+      title: string;
+      context: string;
+      codeSnippet: string;
+      image?: string;
+    };
     color: string;
-    glowColor?: string;
+    glowColor: string;
   }
 
   const animations: ScrollAnimationConfig[] = [
     {
       effect: 'scrollFade',
       text: 'Fade In',
-      description: 'A smooth fade-in effect that gently reveals elements, ideal for professional, understated introductions.',
-      useCases: ['Hero section text', 'Image galleries', 'Content blocks'],
-      caseStudy: 'Used in an e-commerce homepage to reveal product categories with a clean, inviting transition, boosting click-through rates by 15%.',
-      communityExample: 'A developer used Fade In to animate blog post previews, creating a sleek reading experience.',
-      color: 'text-teal-600',
-      glowColor: 'rgba(147, 197, 253, 0.5)',
+      description: 'A subtle fade-in effect for elegant content reveals, perfect for professional landing pages.',
+      useCase: {
+        title: 'E-Commerce Hero Section',
+        context:
+          'Use Fade In to reveal a hero headline and product image on an e-commerce homepage, creating a clean, inviting entry that drives conversions.',
+        codeSnippet: `<AnimatedScroll effect="scrollFade" textColor="text-teal-400" glowColor="rgba(45, 212, 191, 0.5)">Shop Now</AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-teal-400',
+      glowColor: 'rgba(45, 212, 191, 0.5)',
     },
     {
       effect: 'scrollSlide',
       text: 'Slide In',
-      description: 'Slides elements upward with soft opacity, perfect for dynamic, engaging content entrances.',
-      useCases: ['Feature cards', 'Testimonials', 'Navigation menus'],
-      caseStudy: 'Implemented in a portfolio site to slide in project thumbnails, increasing user dwell time by 20%.',
-      communityExample: 'A startup animated their team bios with Slide In, adding a modern touch to their About page.',
-      color: 'text-indigo-600',
+      description: 'Slides content upward with opacity, ideal for dynamic feature showcases.',
+      useCase: {
+        title: 'Portfolio Feature List',
+        context:
+          'Slide In feature descriptions in a creative portfolio, highlighting skills or services with a smooth, engaging motion.',
+        codeSnippet: `<AnimatedScroll effect="scrollSlide" textColor="text-indigo-400">Web Development</AnimatedScroll>`,
+      },
+      color: 'text-indigo-400',
       glowColor: 'rgba(79, 70, 229, 0.5)',
     },
     {
       effect: 'parallax',
       text: 'Parallax',
-      description: 'Creates vertical parallax movement for immersive depth, enhancing scrolling experiences.',
-      useCases: ['Background images', 'Layered hero visuals', 'Storytelling sections'],
-      caseStudy: 'Applied to a travel blog’s hero section for a layered mountain effect, improving user retention.',
-      communityExample: 'A photographer used Parallax for gallery backgrounds, creating a cinematic scroll effect.',
-      color: 'text-blue-500',
+      description: 'Creates layered depth for immersive storytelling sections.',
+      useCase: {
+        title: 'Travel Blog Hero',
+        context:
+          'Apply Parallax to a travel blog’s hero image, with a foreground text layer moving slower than the background, evoking adventure.',
+        codeSnippet: `<AnimatedScroll effect="parallax" className="h-[80vh]"><Image src="/bg.jpg" alt="Travel" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-blue-400',
       glowColor: 'rgba(59, 130, 246, 0.5)',
     },
     {
       effect: 'scale',
       text: 'Scale Up',
-      description: 'Scales elements in with opacity, drawing attention to critical content with elegance.',
-      useCases: ['Call-to-action buttons', 'Product images', 'Stats or metrics'],
-      caseStudy: 'Used in a SaaS landing page to scale up pricing plans, boosting conversions by 10%.',
-      communityExample: 'A freelancer animated service icons with Scale Up, enhancing their portfolio’s appeal.',
-      color: 'text-purple-500',
+      description: 'Scales elements in with focus, perfect for highlighting key CTAs.',
+      useCase: {
+        title: 'SaaS Call-to-Action',
+        context:
+          'Use Scale Up to emphasize a “Sign Up” button on a SaaS landing page, drawing attention with a subtle grow effect.',
+        codeSnippet: `<AnimatedScroll effect="scale" className="px-6 py-3 bg-teal-500 rounded-full">Sign Up</AnimatedScroll>`,
+      },
+      color: 'text-purple-400',
       glowColor: 'rgba(139, 92, 246, 0.5)',
     },
     {
       effect: 'fullPage',
       text: 'Full Page',
-      description: 'Reveals entire sections with a cinematic entrance, ideal for high-impact transitions.',
-      useCases: ['Full-screen hero reveals', 'Section introductions', 'Portfolio showcases'],
-      caseStudy: 'Featured in a creative agency site to introduce service pages, driving engagement.',
-      communityExample: 'A designer used Full Page for project reveals, creating a dramatic portfolio.',
-      color: 'text-red-500',
+      description: 'Reveals entire sections with cinematic flair, ideal for impactful intros.',
+      useCase: {
+        title: 'Agency Service Intro',
+        context:
+          'Reveal an agency’s service page with Full Page, showcasing a full-screen visual and headline for maximum impact.',
+        codeSnippet: `<AnimatedScroll effect="fullPage" className="h-screen"><h1>Our Services</h1></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-red-400',
       glowColor: 'rgba(239, 68, 68, 0.5)',
     },
     {
       effect: 'pin',
       text: 'Pinned Section',
-      description: 'Pins sections with a fading effect, creating sticky focal points during scrolls.',
-      useCases: ['Sticky headers', 'Feature descriptions', 'Interactive timelines'],
-      caseStudy: 'Used in a startup pitch deck to pin key metrics, clarifying the value proposition.',
-      communityExample: 'A blogger pinned article headers, improving navigation during long reads.',
-      color: 'text-orange-500',
+      description: 'Pins content for sticky focal points, great for navigation or headers.',
+      useCase: {
+        title: 'Product Sticky Header',
+        context:
+          'Pin a product page’s header with key details (e.g., price, add to cart) as users scroll through reviews, ensuring easy access.',
+        codeSnippet: `<AnimatedScroll effect="pin" className="bg-gray-800 p-4">Add to Cart</AnimatedScroll>`,
+      },
+      color: 'text-orange-400',
       glowColor: 'rgba(249, 115, 22, 0.5)',
     },
     {
       effect: 'rotate',
       text: 'Rotate In',
-      description: 'Rotates elements into view, adding playful engagement to scroll animations.',
-      useCases: ['Icons', 'Logos', 'Infographics'],
-      caseStudy: 'Applied to a tech blog’s category icons, increasing click rates with a fun twist.',
-      communityExample: 'A startup animated their logo with Rotate In, creating a memorable brand intro.',
-      color: 'text-yellow-500',
+      description: 'Rotates elements into view for playful, engaging reveals.',
+      useCase: {
+        title: 'Tech Blog Icons',
+        context:
+          'Rotate In category icons on a tech blog, adding a fun, dynamic touch to navigation or content previews.',
+        codeSnippet: `<AnimatedScroll effect="rotate" className="w-12 h-12"><svg>...</svg></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-yellow-400',
       glowColor: 'rgba(234, 179, 8, 0.5)',
     },
     {
       effect: 'zoom',
       text: 'Zoom Effect',
-      description: 'Zooms in elements with scale, creating bold, attention-grabbing reveals.',
-      useCases: ['Hero images', 'Product showcases', 'Headlines'],
-      caseStudy: 'Used in a fashion retailer’s site to zoom in on product photos, enhancing visual impact.',
-      communityExample: 'An artist zoomed in gallery thumbnails, adding a dynamic portfolio effect.',
-      color: 'text-pink-500',
+      description: 'Zooms in for bold, attention-grabbing content reveals.',
+      useCase: {
+        title: 'Fashion Product Showcase',
+        context:
+          'Use Zoom to highlight product images in a fashion retailer’s gallery, creating a dramatic reveal as users scroll.',
+        codeSnippet: `<AnimatedScroll effect="zoom"><Image src="/product.jpg" alt="Shoes" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-pink-400',
       glowColor: 'rgba(236, 72, 153, 0.5)',
     },
     {
       effect: 'glowTrail',
       text: 'Glow Trail',
-      description: 'A glowing aura trails elements, perfect for futuristic, sci-fi aesthetics.',
-      useCases: ['Tech landing pages', 'Dashboards', 'Futuristic UI'],
-      caseStudy: 'Featured in a gaming platform’s UI to highlight menu items with neon glow.',
-      communityExample: 'A developer used Glow Trail for a tech demo, creating a cyberpunk vibe.',
-      color: 'text-cyan-500',
+      description: 'A neon glow trails elements, perfect for futuristic UIs.',
+      useCase: {
+        title: 'Gaming Platform Menu',
+        context:
+          'Apply Glow Trail to menu items in a gaming platform’s UI, creating a cyberpunk aesthetic that enhances navigation.',
+        codeSnippet: `<AnimatedScroll effect="glowTrail" textColor="text-cyan-400">Play Now</AnimatedScroll>`,
+      },
+      color: 'text-cyan-400',
       glowColor: 'rgba(147, 197, 253, 0.5)',
     },
     {
       effect: 'holoShift',
       text: 'Holo Shift',
-      description: 'Holographic color shifts with 3D tilt, creating a mesmerizing sci-fi effect.',
-      useCases: ['Hero animations', 'Portfolio highlights', 'Product demos'],
-      caseStudy: 'Used in a VR startup’s site to showcase devices with holographic transitions.',
-      communityExample: 'A designer animated product cards with Holo Shift, adding a futuristic flair.',
-      color: 'text-blue-400',
+      description: 'Holographic color shifts for sci-fi, cutting-edge designs.',
+      useCase: {
+        title: 'VR Product Demo',
+        context:
+          'Use Holo Shift to animate a VR headset image on a product page, with holographic effects that evoke advanced tech.',
+        codeSnippet: `<AnimatedScroll effect="holoShift"><Image src="/vr.jpg" alt="VR Headset" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-blue-300',
       glowColor: 'rgba(59, 130, 246, 0.5)',
     },
     {
       effect: 'elasticReveal',
       text: 'Elastic Reveal',
-      description: 'Stretches and snaps elements into place with springy, playful motion.',
-      useCases: ['Buttons', 'Cards', 'Game UI'],
-      caseStudy: 'Applied to a mobile app’s onboarding cards for a lively, engaging entrance.',
-      communityExample: 'A game dev used Elastic Reveal for UI buttons, enhancing interactivity.',
-      color: 'text-green-500',
+      description: 'Springy, playful reveals for interactive elements.',
+      useCase: {
+        title: 'Mobile App Onboarding',
+        context:
+          'Elastic Reveal onboarding cards in a mobile app, adding a lively, engaging motion to guide users through setup.',
+        codeSnippet: `<AnimatedScroll effect="elasticReveal" className="p-6 bg-green-500 rounded-xl">Next</AnimatedScroll>`,
+      },
+      color: 'text-green-400',
       glowColor: 'rgba(34, 197, 94, 0.5)',
     },
     {
       effect: 'particleBurst',
       text: 'Particle Burst',
-      description: 'Subtle particle explosions enhance scroll reveals with a magical touch.',
-      useCases: ['Portfolio sections', 'Event pages', 'Content reveals'],
-      caseStudy: 'Used in an event site to reveal schedules with sparkling particle effects.',
-      communityExample: 'A creative agency animated event banners with Particle Burst, adding flair.',
-      color: 'text-orange-400',
+      description: 'Sparkling particle effects for magical, celebratory reveals.',
+      useCase: {
+        title: 'Event Schedule Reveal',
+        context:
+          'Use Particle Burst to reveal an event’s schedule, with sparkling particles adding excitement to each session’s entry.',
+        codeSnippet: `<AnimatedScroll effect="particleBurst" glowColor="rgba(255, 159, 64, 0.7)">Day 1</AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-orange-300',
       glowColor: 'rgba(255, 159, 64, 0.7)',
     },
     {
       effect: 'cinematicZoom',
       text: 'Cinematic Zoom',
-      description: 'Dramatic zoom with vignette effect, ideal for movie-like transitions.',
-      useCases: ['Hero intros', 'Video portfolios', 'Story-driven sites'],
-      caseStudy: 'Featured in a filmmaker’s portfolio to introduce reels with cinematic flair.',
-      communityExample: 'A videographer used Cinematic Zoom for video thumbnails, creating drama.',
-      color: 'text-purple-400',
+      description: 'Dramatic zoom with vignette for movie-like transitions.',
+      useCase: {
+        title: 'Filmmaker Portfolio',
+        context:
+          'Apply Cinematic Zoom to video thumbnails in a filmmaker’s portfolio, creating a theatrical reveal for each project.',
+        codeSnippet: `<AnimatedScroll effect="cinematicZoom"><Image src="/video.jpg" alt="Film" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-purple-300',
       glowColor: 'rgba(168, 85, 247, 0.7)',
     },
     {
       effect: 'skewScroll',
       text: 'Skew Scroll',
-      description: 'Dynamically skews elements for a futuristic, distorted scroll effect.',
-      useCases: ['Tech product pages', 'Interactive galleries', 'Creative intros'],
-      caseStudy: 'Used in a digital art gallery to skew artwork previews, creating a unique navigation experience.',
-      communityExample: 'A tech startup animated feature cards with Skew Scroll, adding a modern edge.',
-      color: 'text-teal-500',
+      description: 'Distorted skews for futuristic, dynamic layouts.',
+      useCase: {
+        title: 'Digital Art Gallery',
+        context:
+          'Use Skew Scroll to animate artwork previews in a digital gallery, creating a unique, avant-garde navigation experience.',
+        codeSnippet: `<AnimatedScroll effect="skewScroll"><Image src="/art.jpg" alt="Artwork" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-teal-300',
       glowColor: 'rgba(45, 212, 191, 0.5)',
     },
     {
       effect: 'waveShift',
       text: 'Wave Shift',
-      description: 'Elements move in a wave-like pattern, simulating fluid, organic motion.',
-      useCases: ['Nature-themed sites', 'Wellness apps', 'Creative portfolios'],
-      caseStudy: 'Applied to a yoga studio’s site to animate class schedules with a flowing wave effect.',
-      communityExample: 'A wellness app used Wave Shift for section headers, evoking calm motion.',
-      color: 'text-blue-600',
+      description: 'Fluid, wave-like motion for organic, calming effects.',
+      useCase: {
+        title: 'Wellness App Header',
+        context:
+          'Apply Wave Shift to a wellness app’s section headers, evoking a soothing, flowing motion for class schedules or tips.',
+        codeSnippet: `<AnimatedScroll effect="waveShift" textColor="text-blue-500">Meditation</AnimatedScroll>`,
+      },
+      color: 'text-blue-500',
       glowColor: 'rgba(37, 99, 235, 0.5)',
     },
     {
       effect: 'depthPulse',
       text: 'Depth Pulse',
-      description: 'Combines 3D depth with a pulsing scale for a heartbeat-like effect.',
-      useCases: ['Health tech UIs', 'Hero sections', 'Interactive dashboards'],
-      caseStudy: 'Used in a health app’s dashboard to pulse key metrics with a 3D effect.',
-      communityExample: 'A fitness tracker UI animated stats with Depth Pulse, enhancing engagement.',
-      color: 'text-red-600',
+      description: '3D pulsing depth for engaging, heartbeat-like effects.',
+      useCase: {
+        title: 'Health Tech Dashboard',
+        context:
+          'Use Depth Pulse to animate key metrics (e.g., heart rate) in a health tech dashboard, emphasizing data with a 3D pulse.',
+        codeSnippet: `<AnimatedScroll effect="depthPulse" className="p-4 bg-red-500 rounded-lg">120 BPM</AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-red-300',
       glowColor: 'rgba(220, 38, 38, 0.5)',
     },
     {
       effect: 'orbitTrail',
       text: 'Orbit Trail',
-      description: 'Elements follow an orbital path with trailing particles, evoking cosmic motion.',
-      useCases: ['Space-themed sites', 'Tech demos', 'Creative intros'],
-      caseStudy: 'Featured in a space startup’s site to orbit product images with particle trails.',
-      communityExample: 'A sci-fi blog used Orbit Trail for article intros, creating a cosmic vibe.',
-      color: 'text-indigo-500',
+      description: 'Cosmic orbital motion with particle trails for sci-fi intros.',
+      useCase: {
+        title: 'Space Startup Hero',
+        context:
+          'Apply Orbit Trail to a space startup’s hero image, with orbiting particles creating a cosmic, futuristic intro.',
+        codeSnippet: `<AnimatedScroll effect="orbitTrail"><Image src="/space.jpg" alt="Rocket" /></AnimatedScroll>`,
+        image: '/images/iphone.jpg',
+      },
+      color: 'text-indigo-300',
       glowColor: 'rgba(99, 102, 241, 0.5)',
     },
   ];
@@ -233,311 +299,201 @@ const ScrollAnimations: React.FC = () => {
   const currentAnimation = animations.find((anim) => anim.effect === selectedEffect) || animations[0];
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
+    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans">
+      {/* Subtle Background Animation */}
+      <motion.div
+        className="fixed inset-0 -z-10"
+        animate={{
+          background: [
+            'radial-gradient(circle at 10% 10%, rgba(45, 212, 191, 0.15), transparent 70%)',
+            'radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.15), transparent 70%)',
+            'radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15), transparent 70%)',
+          ],
+        }}
+        transition={{ duration: 12, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
+      />
+
       {/* Dark/Light Mode Toggle */}
-      <button
+      <motion.button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 z-50"
+        className="fixed top-4 right-4 p-3 rounded-full bg-gray-900/80 backdrop-blur-sm text-teal-400 hover:text-teal-300 transition-colors duration-300 z-50 shadow-[0_0_10px_rgba(45,212,191,0.3)]"
         aria-label="Toggle dark mode"
+        whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(45, 212, 191, 0.5)' }}
+        whileTap={{ scale: 0.95 }}
       >
-        {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
-      </button>
+        {isDarkMode ? <FiSun size={20} /> : <FiMoon />}
+      </motion.button>
 
       {/* Header */}
       <Header />
 
       {/* Hero Section */}
-      <section className="relative py-20 px-6 max-w-7xl mx-auto text-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(147,197,253,0.1)] dark:to-[rgba(59,130,246,0.2)] -z-10" />
+      <section className="relative py-24 px-8 max-w-7xl mx-auto text-center">
+        <motion.div
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[rgba(45,212,191,0.05)] to-[rgba(59,130,246,0.1)]"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        />
         <AnimatedText
           effect="holoWave"
           duration={Infinity}
-          textColor={isDarkMode ? 'text-teal-400' : 'text-indigo-700'}
-          fontSize="text-4xl md:text-5xl"
-          glowColor="rgba(6, 182, 212, 0.7)"
-          className="font-bold mb-6"
+          textColor="text-teal-500"
+          className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
+          glowColor="rgba(6, 182, 212, 0.6)"
         >
-          Master Scroll Animations
+          Scroll Animations Reimagined
         </AnimatedText>
-        <p className={`text-lg md:text-xl ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} max-w-3xl mx-auto mb-8`}>
-          Explore ReactLab’s cutting-edge scroll animations, powered by Framer Motion and Lenis. Select an effect to experience its full potential through an immersive showcase, complete with real-world applications, performance insights, and community examples.
-        </p>
+        <motion.p
+          className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          Discover 17 powerful scroll animations from ReactLab, built with Framer Motion and Lenis. Dive into real-world examples to inspire your next React project with seamless, GPU-accelerated effects.
+        </motion.p>
       </section>
 
       {/* Effect Selector */}
-      <section className="py-8 px-6 max-w-7xl mx-auto sticky top-0 bg-inherit z-40">
-        <div className="flex justify-center mb-12">
-          <select
-            value={selectedEffect}
-            onChange={(e) => setSelectedEffect(e.target.value as any)}
-            className={`w-full max-w-md p-3 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white border ${isDarkMode ? 'border-gray-700' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-cyan-500 transition-all duration-200 text-lg font-semibold cursor-pointer shadow-md hover:shadow-lg`}
-          >
-            {animations.map(({ effect, text }) => (
-              <option key={effect} value={effect}>
-                {text}
-              </option>
-            ))}
-          </select>
-        </div>
+      <section className="py-4 px-8 max-w-7xl mx-auto sticky top-0 bg-[#1A1A1A]/90 backdrop-blur-md z-40">
+        <motion.div
+          className="flex flex-wrap justify-center gap-2 md:gap-3"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {animations.map(({ effect, text }) => (
+            <motion.button
+              key={effect}
+              onClick={() => setSelectedEffect(effect)}
+              className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
+                selectedEffect === effect
+                  ? 'bg-teal-500 text-white shadow-[0_0_12px_rgba(45,212,191,0.5)]'
+                  : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 hover:text-teal-400'
+              }`}
+              whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgba(45, 212, 191, 0.3)' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {text}
+            </motion.button>
+          ))}
+        </motion.div>
       </section>
 
-      {/* Extended Showcase Section */}
-      <section className="py-16 px-6 max-w-7xl mx-auto min-h-[350vh] flex flex-col gap-16">
-        {/* Main Effect Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      {/* Use Case Showcase */}
+      <section className="py-16 px-8 max-w-7xl mx-auto">
+        <motion.div
+          className="relative min-h-[100vh] mb-12"
+          key={selectedEffect}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <AnimatedScroll
             effect={selectedEffect}
-            triggerPoint={0.2}
-            duration={800}
+            triggerPoint={0.1}
+            duration={1000}
             glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300"
+            className="relative"
           >
-            <h2 className={`text-3xl md:text-4xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              {currentAnimation.text}
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
-              {currentAnimation.description}
-            </p>
-            <h3 className={`text-xl font-semibold ${isDarkMode ? 'text-teal-400' : 'text-indigo-600'} mb-2`}>Use Cases</h3>
-            <ul className={`list-disc list-inside ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {currentAnimation.useCases.map((useCase, index) => (
-                <li key={index}>{useCase}</li>
-              ))}
-            </ul>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.2}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-xl"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(circle at 50% 50%, ${currentAnimation.glowColor || 'rgba(147, 197, 253, 0.5)'}, transparent 70%)`,
-              }}
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-2xl md:text-3xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Primary Visual
+            <div className="relative z-10">
+              <h2 className={`text-3xl md:text-4xl font-bold ${currentAnimation.color} mb-6 tracking-tight`}>
+                {currentAnimation.useCase.title}
+              </h2>
+              <p className="text-lg text-gray-300 mb-8 max-w-2xl">{currentAnimation.useCase.context}</p>
+              {currentAnimation.useCase.image && (
+                <motion.div
+                  className="relative w-full h-[50vh] md:h-[60vh] rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Image
+                    src={currentAnimation.useCase.image}
+                    alt={currentAnimation.useCase.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <motion.div
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%)` }}
+                    animate={{ opacity: [0.5, 0.7, 0.5] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+                  />
+                </motion.div>
+              )}
+              <pre className="mt-8 text-sm bg-gray-900/80 p-4 rounded-lg text-gray-300 max-w-2xl font-mono">
+                {currentAnimation.useCase.codeSnippet}
+              </pre>
             </div>
+            <motion.div
+              className="absolute inset-0 -z-10"
+              style={{ background: `radial-gradient(circle at 50% 50%, ${currentAnimation.glowColor}, transparent 70%)` }}
+              animate={{ opacity: [0.15, 0.25, 0.15] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+            />
           </AnimatedScroll>
-        </div>
+        </motion.div>
 
         {/* Why Use Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <motion.div className="relative min-h-[60vh] mb-12">
           <AnimatedScroll
             effect={selectedEffect}
             triggerPoint={0.3}
-            duration={800}
+            duration={1000}
             glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl order-2 md:order-1"
+            className="relative flex flex-col md:flex-row items-center gap-8"
           >
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-500 dark:from-cyan-600 dark:to-blue-600 opacity-75"
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Supporting Visual
+            <div className="flex-1">
+              <h3 className={`text-2xl md:text-3xl font-bold ${currentAnimation.color} mb-4`}>Why Use {currentAnimation.text}?</h3>
+              <p className="text-lg text-gray-300 max-w-lg">
+                {currentAnimation.description} Its GPU-accelerated animations and easy-to-use props make it a versatile choice for modern React applications.
+              </p>
             </div>
+            <motion.div
+              className="relative w-full md:w-1/2 h-[40vh] rounded-2xl overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r"
+                style={{ background: `linear-gradient(to right, ${currentAnimation.glowColor}, transparent)` }}
+                animate={{ opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center text-xl font-semibold text-white">
+                Visual Example
+              </div>
+            </motion.div>
           </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.3}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300 order-1 md:order-2"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Why Use {currentAnimation.text}?
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {currentAnimation.text} transforms static pages into dynamic experiences. Its GPU-accelerated animations ensure buttery-smooth performance, while flexible props allow tailoring to any design system, from minimalist portfolios to vibrant e-commerce sites.
-            </p>
-          </AnimatedScroll>
-        </div>
+        </motion.div>
 
-        {/* Case Study Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.4}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Real-World Example
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {currentAnimation.caseStudy} This implementation showcases how {currentAnimation.text} can elevate user engagement and drive measurable results.
-            </p>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.4}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(45deg, ${currentAnimation.glowColor || 'rgba(147, 197, 253, 0.5)'}, transparent)`,
-              }}
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Case Study Visual
-            </div>
-          </AnimatedScroll>
-        </div>
-
-        {/* Technical Insights Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Technical Details Section */}
+        <motion.div className="relative min-h-[60vh]">
           <AnimatedScroll
             effect={selectedEffect}
             triggerPoint={0.5}
-            duration={800}
+            duration={1000}
             glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl order-2 md:order-1"
+            className="relative"
           >
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-600 dark:to-purple-600 opacity-75"
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Technical Visual
-            </div>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.5}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300 order-1 md:order-2"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Technical Insights
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {currentAnimation.text} leverages Framer Motion’s scroll-based transforms and Lenis for silky-smooth scrolling. Customize with props like <code>triggerPoint</code> (viewport activation), <code>duration</code> (animation length), and <code>glowColor</code> (visual flair). Integrate with ReactLab’s ecosystem for cohesive, high-performance UIs.
-            </p>
-          </AnimatedScroll>
-        </div>
-
-        {/* Performance Benefits Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.6}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Performance Benefits
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Optimized for 60fps on modern devices, {currentAnimation.text} uses GPU-accelerated transforms to ensure smooth rendering, even on mobile. Minimal DOM impact and efficient scroll listeners make it ideal for performance-critical applications.
-            </p>
-            <ul className={`list-disc list-inside ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-4`}>
-              <li>60fps on desktop and mobile</li>
-              <li>Low CPU usage with GPU acceleration</li>
-              <li>Efficient scroll event handling</li>
-            </ul>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.6}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(circle at 30% 70%, ${currentAnimation.glowColor || 'rgba(147, 197, 253, 0.5)'}, transparent 70%)`,
-              }}
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Performance Visual
-            </div>
-          </AnimatedScroll>
-        </div>
-
-        {/* Community Examples Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.7}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl order-2 md:order-1"
-          >
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 dark:from-pink-600 dark:to-purple-600 opacity-75"
-            />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Community Visual
-            </div>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.7}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300 order-1 md:order-2"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Community Examples
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              {currentAnimation.communityExample} Join the ReactLab community to share your creations and discover innovative ways to use {currentAnimation.text} in your projects.
-            </p>
-          </AnimatedScroll>
-        </div>
-
-        {/* Get Started Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.8}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="p-8 rounded-lg shadow-xl bg-white dark:bg-gray-800 transition-colors duration-300"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? currentAnimation.color.replace('500', '400').replace('600', '500').replace('400', '300') : currentAnimation.color} mb-4`}>
-              Get Started
-            </h2>
-            <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
-              Install ReactLab via npm and integrate {currentAnimation.text} with a single component. Customize its behavior to match your design system and create stunning, interactive experiences.
-            </p>
-            <div className="mt-4">
-              <h4 className={`text-lg font-semibold ${isDarkMode ? 'text-teal-400' : 'text-indigo-600'} mb-2`}>Key Props</h4>
-              <ul className={`list-disc list-inside ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                <li><code>effect</code>: Choose from {animations.length} scroll effects</li>
-                <li><code>triggerPoint</code>: Set viewport activation (0 to 1)</li>
-                <li><code>duration</code>: Control animation length in pixels</li>
-                <li><code>glowColor</code>: Customize glow for effects like {currentAnimation.text}</li>
+            <div className="relative z-10">
+              <h3 className={`text-2xl md:text-3xl font-bold ${currentAnimation.color} mb-4`}>Technical Details</h3>
+              <p className="text-lg text-gray-300 mb-6 max-w-2xl">
+                Powered by Framer Motion and Lenis, {currentAnimation.text} offers customizable props like <code>triggerPoint</code>, <code>duration</code>, and <code>glowColor</code>. Optimized for 60fps with minimal CPU usage.
+              </p>
+              <ul className="list-disc list-inside text-gray-300">
+                <li>Trigger Point: {0.1} to {0.5}</li>
+                <li>Duration: Up to {1000}px</li>
+                <li>Glow Color: {currentAnimation.glowColor}</li>
               </ul>
             </div>
-          </AnimatedScroll>
-          <AnimatedScroll
-            effect={selectedEffect}
-            triggerPoint={0.8}
-            duration={800}
-            glowColor={currentAnimation.glowColor}
-            className="relative h-48 md:h-64 rounded-lg overflow-hidden shadow-xl"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(circle at 70% 30%, ${currentAnimation.glowColor || 'rgba(147, 197, 253, 0.5)'}, transparent 70%)`,
-              }}
+            <motion.div
+              className="absolute inset-0 -z-10"
+              style={{ background: `radial-gradient(circle at 80% 20%, ${currentAnimation.glowColor}, transparent 70%)` }}
+              animate={{ opacity: [0.1, 0.2, 0.1] }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
             />
-            <div className={`absolute inset-0 flex items-center justify-center font-semibold text-xl md:text-2xl ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Integration Visual
-            </div>
           </AnimatedScroll>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
