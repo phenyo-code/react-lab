@@ -7,6 +7,7 @@ import AnimatedText from '@/app/components/animations/AnimatedText';
 import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
 import Header from '@/app/components/Header';
 import Lenis from '@studio-freight/lenis';
+import Footer from '../components/Footer';
 
 const Examples: React.FC = () => {
   // Initialize Lenis for smooth scrolling
@@ -756,6 +757,7 @@ const OptimizedScroll = () => (
           </AnimatedScroll>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };

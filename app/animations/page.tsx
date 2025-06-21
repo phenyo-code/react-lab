@@ -8,6 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
+import Footer from '../components/Footer';
 
 const Animations: React.FC = () => {
   // Initialize Lenis for smooth scrolling
@@ -169,27 +170,8 @@ const Animations: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-8 text-center text-gray-400 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center gap-6 mb-4">
-            <Link href="/docs" className="hover:text-pink-500 transition-colors duration-200">
-              Docs
-            </Link>
-            <Link href="/animations" className="hover:text-pink-500 transition-colors duration-200">
-              Showcase
-            </Link>
-            <Link
-              href="https://github.com/your-repo/react-lab"
-              className="hover:text-pink-500 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </Link>
-          </div>
-          <p>Copyright © 2025 React Lab. All rights reserved.</p>
-        </div>
-      </footer>
+<Footer />
+
     </div>
   );
 };

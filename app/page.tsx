@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
+import Footer from './components/Footer';
 
 const Home: React.FC = () => {
   // Initialize Lenis for smooth scrolling
@@ -125,7 +126,7 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="py-24 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
         <AnimatedScroll
-          effect="scrollFade"
+          effect="slideInLeft"
           triggerPoint={0.1}
           duration={1000}
           className="flex flex-col items-center"
@@ -139,13 +140,16 @@ const Home: React.FC = () => {
             className="font-bold mb-6 tracking-tight"
           >
             React Animations
+            
           </AnimatedText>
+                 <hr className="border-gray-700 mb-6 max-w-md mx-auto " />
           <motion.p
             className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
             style={{ y: yRange, opacity: opacityRange }}
           >
             React Animations is a free, open-source library crafted for Next.js developers to effortlessly add dynamic, GPU-accelerated animations. Install with `npm install react-animations` to integrate lightweight, TypeScript-friendly text and scroll effects powered by Framer Motion and Lenis. Elevate your portfolios, e-commerce sites, and dashboards with professional-grade UI animations in minutes.
           </motion.p>
+                 <hr className="border-gray-700 mb-6 max-w-md mx-auto " />
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
@@ -156,18 +160,12 @@ const Home: React.FC = () => {
                 Explore Animations
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/docs"
-                className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-300"
-                aria-label="View Documentation"
-              >
-                View Docs
-              </Link>
-            </motion.div>
           </div>
+
         </AnimatedScroll>
+
       </section>
+         
 
       {/* Introduction Section */}
       <section
@@ -183,7 +181,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
             Why React Animations?
           </h2>
-          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+
           <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
             React Animations empowers developers to enhance their Next.js applications with minimal effort. Install via `npm install react-animations` and drop our components into your project to create stunning, performant UIs. Built with TypeScript, Framer Motion, and Lenis, our library is perfect for portfolios, e-commerce platforms, dashboards, and more, offering seamless integration and professional-grade animations.
           </p>
@@ -202,6 +200,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 tracking-tight">
             Core Features
           </h2>
+                    <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
         </AnimatedScroll>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-700">
           {features.map(({ title, description, icon, textEffect }, index) => (
@@ -255,7 +254,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
             Text Animation Showcase
           </h2>
-          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+
           <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-12">
             Discover the power of our `AnimatedText` component with effects like ripple, burst, and pulse. These animations, infused with wave-like motion, are perfect for hero sections, product highlights, and interactive dashboards. Explore all 20+ effects to add flair to your Next.js projects.
           </p>
@@ -286,8 +285,10 @@ const Home: React.FC = () => {
               <p className="text-gray-400 text-sm max-w-xs">{description}</p>
               <hr className="border-gray-700 mt-2 max-w-xs mx-auto" />
             </AnimatedScroll>
+            
           ))}
         </div>
+        
       </section>
 
       {/* Scroll Showcase */}
@@ -304,7 +305,7 @@ const Home: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
             Scroll Animation Showcase
           </h2>
-          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+
           <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-12">
             Transform navigation with our `AnimatedScroll` component. Effects like scrollFade, slideInLeft, and slideInRight create engaging transitions for blog posts, portfolios, and e-commerce grids. Explore these GPU-accelerated animations to captivate your users.
           </p>
@@ -344,6 +345,7 @@ const Home: React.FC = () => {
           <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
             React Animations thrives on community contributions. Join developers worldwide on GitHub to share feedback, report issues, or contribute new effects. Star our repository, explore our open-source code, and help shape the future of animation in Next.js.
           </p>
+                    <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="https://github.com/your-repo/react-animations"
@@ -355,8 +357,11 @@ const Home: React.FC = () => {
               Contribute on GitHub
             </Link>
           </motion.div>
+         
         </AnimatedScroll>
+        
       </section>
+      
 
       {/* CTA Section */}
       <section className="py-16 px-6 max-w-7xl mx-auto border-b border-gray-700">
@@ -372,6 +377,7 @@ const Home: React.FC = () => {
           <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
             Start building captivating Next.js applications today with `react-animations`. Install via `npm install react-animations` to access our lightweight, TypeScript-friendly library. Dive into our documentation for setup guides or explore the showcase to see our animations in action.
           </p>
+                    <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
@@ -396,27 +402,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 text-center text-gray-400 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center gap-6 mb-4">
-            <Link href="/docs" className="hover:text-pink-500 transition-colors duration-200">
-              Docs
-            </Link>
-            <Link href="/animations" className="hover:text-pink-500 transition-colors duration-200">
-              Showcase
-            </Link>
-            <Link
-              href="https://github.com/your-repo/react-animations"
-              className="hover:text-pink-500 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </Link>
-          </div>
-          <p>Copyright © 2025 React Animations. All rights reserved.</p>
-        </div>
-      </footer>
+<Footer />
     </div>
   );
 };
