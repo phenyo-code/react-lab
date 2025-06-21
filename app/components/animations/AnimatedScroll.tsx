@@ -23,7 +23,9 @@ interface AnimatedScrollProps {
     | 'skewScroll'
     | 'waveShift'
     | 'depthPulse'
-    | 'orbitTrail';
+    | 'orbitTrail'
+    | 'slideInLeft'
+    | 'slideInRight';
   triggerPoint?: number;
   duration?: number;
   className?: string;
@@ -35,8 +37,8 @@ interface AnimatedScrollProps {
 const AnimatedScroll: React.FC<AnimatedScrollProps> = ({
   children,
   effect = 'scrollFade',
-  triggerPoint = 0.25, // Adjusted for earlier, precise triggers
-  duration = 800, // Longer for smoother transitions
+  triggerPoint = 0.25,
+  duration = 800,
   className = '',
   textColor = 'text-gray-900',
   fontSize = 'text-2xl',
@@ -45,16 +47,16 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end 75%'], // Tighter range for accuracy
+    offset: ['start end', 'end 75%'],
   });
 
   // Initialize Lenis for smooth scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.8, // Slightly longer for fluid scrolling
+      duration: 1.8,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -12 * t)),
       smoothWheel: true,
-      touchMultiplier: 2, // Enhance touch sensitivity
+      touchMultiplier: 2,
     });
 
     const raf = (time: number) => {
@@ -69,6 +71,8 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({
   // Animation transforms
   const opacity: MotionValue<number> = useTransform(scrollYProgress, [triggerPoint - 0.1, triggerPoint], [0, 1]);
   const y: MotionValue<number> = useTransform(scrollYProgress, [triggerPoint - 0.1, triggerPoint], [50, 0]);
+  const slideInLeft: MotionValue<number> = useTransform(scrollYProgress, [triggerPoint - 0.1, triggerPoint], [-100, 0]);
+  const slideInRight: MotionValue<number> = useTransform(scrollYProgress, [triggerPoint - 0.1, triggerPoint], [100, 0]);
   const parallaxY: MotionValue<number> = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const parallaxScale: MotionValue<number> = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const scale: MotionValue<number> = useTransform(scrollYProgress, [triggerPoint - 0.1, triggerPoint], [0.9, 1]);
@@ -149,6 +153,14 @@ const AnimatedScroll: React.FC<AnimatedScrollProps> = ({
     },
     orbitTrail: {
       style: { opacity, x: orbitX, y: orbitY, textShadow: glowShadow },
+      transition: { ease: [0.4, 0, 0.2, 1], duration: duration / 1000 },
+    },
+    slideInLeft: {
+      style: { opacity, x: slideInLeft },
+      transition: { ease: [0.4, 0, 0.2, 1], duration: duration / 1000 },
+    },
+    slideInRight: {
+      style: { opacity, x: slideInRight },
       transition: { ease: [0.4, 0, 0.2, 1], duration: duration / 1000 },
     },
   };

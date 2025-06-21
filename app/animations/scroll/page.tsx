@@ -70,11 +70,11 @@ const ScrollAnimations: React.FC = () => {
         title: 'E-Commerce Hero Section',
         context:
           'Use Fade In to reveal a hero headline and product image on an e-commerce homepage, creating a clean, inviting entry that drives conversions.',
-        codeSnippet: `<AnimatedScroll effect="scrollFade" textColor="text-teal-400" glowColor="rgba(45, 212, 191, 0.5)">Shop Now</AnimatedScroll>`,
+        codeSnippet: `<AnimatedScroll effect="scrollFade" textColor="text-pink-400" glowColor="rgba(236, 72, 153, 0.5)">Shop Now</AnimatedScroll>`,
         image: '/images/iphone.jpg',
       },
-      color: 'text-teal-400',
-      glowColor: 'rgba(45, 212, 191, 0.5)',
+      color: 'text-pink-400',
+      glowColor: 'rgba(236, 72, 153, 0.5)',
     },
     {
       effect: 'scrollSlide',
@@ -84,10 +84,10 @@ const ScrollAnimations: React.FC = () => {
         title: 'Portfolio Feature List',
         context:
           'Slide In feature descriptions in a creative portfolio, highlighting skills or services with a smooth, engaging motion.',
-        codeSnippet: `<AnimatedScroll effect="scrollSlide" textColor="text-indigo-400">Web Development</AnimatedScroll>`,
+        codeSnippet: `<AnimatedScroll effect="scrollSlide" textColor="text-teal-400">Web Development</AnimatedScroll>`,
       },
-      color: 'text-indigo-400',
-      glowColor: 'rgba(79, 70, 229, 0.5)',
+      color: 'text-teal-400',
+      glowColor: 'rgba(45, 212, 191, 0.5)',
     },
     {
       effect: 'parallax',
@@ -111,10 +111,10 @@ const ScrollAnimations: React.FC = () => {
         title: 'SaaS Call-to-Action',
         context:
           'Use Scale Up to emphasize a “Sign Up” button on a SaaS landing page, drawing attention with a subtle grow effect.',
-        codeSnippet: `<AnimatedScroll effect="scale" className="px-6 py-3 bg-teal-500 rounded-full">Sign Up</AnimatedScroll>`,
+        codeSnippet: `<AnimatedScroll effect="scale" className="px-6 py-3 bg-pink-500 rounded-full">Sign Up</AnimatedScroll>`,
       },
-      color: 'text-purple-400',
-      glowColor: 'rgba(139, 92, 246, 0.5)',
+      color: 'text-pink-500',
+      glowColor: 'rgba(236, 72, 153, 0.5)',
     },
     {
       effect: 'fullPage',
@@ -127,8 +127,8 @@ const ScrollAnimations: React.FC = () => {
         codeSnippet: `<AnimatedScroll effect="fullPage" className="h-screen"><h1>Our Services</h1></AnimatedScroll>`,
         image: '/images/iphone.jpg',
       },
-      color: 'text-red-400',
-      glowColor: 'rgba(239, 68, 68, 0.5)',
+      color: 'text-purple-400',
+      glowColor: 'rgba(139, 92, 246, 0.5)',
     },
     {
       effect: 'pin',
@@ -299,26 +299,25 @@ const ScrollAnimations: React.FC = () => {
   const currentAnimation = animations.find((anim) => anim.effect === selectedEffect) || animations[0];
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans">
-      {/* Subtle Background Animation */}
-      <motion.div
-        className="fixed inset-0 -z-10"
-        animate={{
-          background: [
-            'radial-gradient(circle at 10% 10%, rgba(45, 212, 191, 0.15), transparent 70%)',
-            'radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.15), transparent 70%)',
-            'radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15), transparent 70%)',
-          ],
-        }}
-        transition={{ duration: 12, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
-      />
-
+    <div
+      className="min-h-screen bg-[#1A1A1A] text-white font-sans relative"
+      style={{
+        backgroundImage: `
+          linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+          linear-gradient(-135deg, rgba(255,255,255,0.02) 1px, transparent 1px)
+        `,
+        backgroundSize: '15px 15px',
+      }}
+    >
       {/* Dark/Light Mode Toggle */}
       <motion.button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed top-4 right-4 p-3 rounded-full bg-gray-900/80 backdrop-blur-sm text-teal-400 hover:text-teal-300 transition-colors duration-300 z-50 shadow-[0_0_10px_rgba(45,212,191,0.3)]"
+        className="fixed top-4 right-4 p-3 rounded-full bg-gray-900/80 backdrop-blur-sm text-pink-400 hover:text-pink-300 transition-colors duration-300 z-50 shadow-[0_0_10px_rgba(236,72,153,0.3)]"
         aria-label="Toggle dark mode"
-        whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(45, 212, 191, 0.5)' }}
+        whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(236, 72, 153, 0.5)' }}
         whileTap={{ scale: 0.95 }}
       >
         {isDarkMode ? <FiSun size={20} /> : <FiMoon />}
@@ -328,23 +327,18 @@ const ScrollAnimations: React.FC = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative py-24 px-8 max-w-7xl mx-auto text-center">
-        <motion.div
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[rgba(45,212,191,0.05)] to-[rgba(59,130,246,0.1)]"
-          animate={{ opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-        />
+      <section className="relative py-24 px-8 max-w-7xl mx-auto text-center border-b border-gray-700">
         <AnimatedText
           effect="holoWave"
           duration={Infinity}
-          textColor="text-teal-500"
+          textColor="text-pink-500"
           className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
-          glowColor="rgba(6, 182, 212, 0.6)"
+          glowColor="rgba(236, 72, 153, 0.6)"
         >
           Scroll Animations Reimagined
         </AnimatedText>
         <motion.p
-          className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
+          className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -354,7 +348,7 @@ const ScrollAnimations: React.FC = () => {
       </section>
 
       {/* Effect Selector */}
-      <section className="py-4 px-8 max-w-7xl mx-auto sticky top-0 bg-[#1A1A1A]/90 backdrop-blur-md z-40">
+      <section className="py-4 px-8 max-w-7xl mx-auto sticky top-0 bg-[#1A1A1A]/90 backdrop-blur-md z-40 border-b border-gray-700">
         <motion.div
           className="flex flex-wrap justify-center gap-2 md:gap-3"
           initial={{ opacity: 0, y: -10 }}
@@ -367,10 +361,10 @@ const ScrollAnimations: React.FC = () => {
               onClick={() => setSelectedEffect(effect)}
               className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 ${
                 selectedEffect === effect
-                  ? 'bg-teal-500 text-white shadow-[0_0_12px_rgba(45,212,191,0.5)]'
-                  : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 hover:text-teal-400'
+                  ? 'bg-pink-500 text-white shadow-[0_0_12px_rgba(236,72,153,0.5)]'
+                  : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 hover:text-pink-400'
               }`}
-              whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgba(45, 212, 191, 0.3)' }}
+              whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgba(236, 72, 153, 0.3)' }}
               whileTap={{ scale: 0.95 }}
             >
               {text}
@@ -399,7 +393,7 @@ const ScrollAnimations: React.FC = () => {
               <h2 className={`text-3xl md:text-4xl font-bold ${currentAnimation.color} mb-6 tracking-tight`}>
                 {currentAnimation.useCase.title}
               </h2>
-              <p className="text-lg text-gray-300 mb-8 max-w-2xl">{currentAnimation.useCase.context}</p>
+              <p className="text-lg text-gray-400 mb-8 max-w-2xl">{currentAnimation.useCase.context}</p>
               {currentAnimation.useCase.image && (
                 <motion.div
                   className="relative w-full h-[50vh] md:h-[60vh] rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]"
@@ -420,7 +414,7 @@ const ScrollAnimations: React.FC = () => {
                   />
                 </motion.div>
               )}
-              <pre className="mt-8 text-sm bg-gray-900/80 p-4 rounded-lg text-gray-300 max-w-2xl font-mono">
+              <pre className="mt-8 text-sm bg-gray-800/80 p-4 rounded-lg text-gray-400 max-w-2xl font-mono">
                 {currentAnimation.useCase.codeSnippet}
               </pre>
             </div>
@@ -444,7 +438,7 @@ const ScrollAnimations: React.FC = () => {
           >
             <div className="flex-1">
               <h3 className={`text-2xl md:text-3xl font-bold ${currentAnimation.color} mb-4`}>Why Use {currentAnimation.text}?</h3>
-              <p className="text-lg text-gray-300 max-w-lg">
+              <p className="text-lg text-gray-400 max-w-lg">
                 {currentAnimation.description} Its GPU-accelerated animations and easy-to-use props make it a versatile choice for modern React applications.
               </p>
             </div>
@@ -477,10 +471,10 @@ const ScrollAnimations: React.FC = () => {
           >
             <div className="relative z-10">
               <h3 className={`text-2xl md:text-3xl font-bold ${currentAnimation.color} mb-4`}>Technical Details</h3>
-              <p className="text-lg text-gray-300 mb-6 max-w-2xl">
+              <p className="text-lg text-gray-400 mb-6 max-w-2xl">
                 Powered by Framer Motion and Lenis, {currentAnimation.text} offers customizable props like <code>triggerPoint</code>, <code>duration</code>, and <code>glowColor</code>. Optimized for 60fps with minimal CPU usage.
               </p>
-              <ul className="list-disc list-inside text-gray-300">
+              <ul className="list-disc list-inside text-gray-400">
                 <li>Trigger Point: {0.1} to {0.5}</li>
                 <li>Duration: Up to {1000}px</li>
                 <li>Glow Color: {currentAnimation.glowColor}</li>
