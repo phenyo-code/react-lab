@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useEffect } from 'react';
@@ -5,6 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import AnimatedText from '@/app/components/animations/AnimatedText';
 import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
+import TypewriterText from '@/app/components/animations/TypewriterText';
 import Header from '@/app/components/Header';
 import Lenis from '@studio-freight/lenis';
 import Footer from '../components/Footer';
@@ -43,7 +45,7 @@ const Examples: React.FC = () => {
       <Header />
 
       {/* Main Content */}
-      <main className="flex-1 py-16 px-8 max-w-6xl mx-auto min-w-0" >
+      <main className="flex-1 py-16 px-8 max-w-6xl mx-auto min-w-0">
         {/* Hero Section */}
         <section id="hero" className="py-16" style={gradientBackground}>
           <AnimatedScroll
@@ -86,7 +88,7 @@ const Examples: React.FC = () => {
         </section>
 
         {/* Text Animation Examples */}
-        <section id="text-examples" className="py-16" >
+        <section id="text-examples" className="py-16">
           <AnimatedScroll
             effect="slideInLeft"
             triggerPoint={0.15}
@@ -103,7 +105,7 @@ const Examples: React.FC = () => {
             </AnimatedText>
             <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
             <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
-              Create captivating headings and callouts with `AnimatedText`. Below are five examples showcasing `ripple`, `burst`, `pulse`, `wave`, and `shuffle` effects.
+              Create captivating headings and callouts with `AnimatedText`. Below are five examples showcasing `ripple`, `burst`, `pulse`, `wave`, and `typewriter` effects.
             </p>
             <hr className="border-gray-700 mb-12 max-w-md mx-auto" />
           </AnimatedScroll>
@@ -121,32 +123,95 @@ const Examples: React.FC = () => {
                 textColor="text-pink-500"
                 className="text-xl font-semibold mb-4"
               >
-                Portfolio Hero Title
+                Product Highlight
               </AnimatedText>
               <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
               <p className="text-gray-400 text-sm mb-4">
-                The `ripple` effect adds fluid motion to hero titles, ideal for portfolios.
+                The `ripple` effect adds fluid motion to product highlights.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const PortfolioHero = () => (
-  <AnimatedText
-    effect="ripple"
-    duration={1.5}
-    textColor="text-pink-500"
-    className="text-4xl font-bold"
-  >
-    Welcome to My Portfolio
-  </AnimatedText>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>ProductHighlight</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"ripple"</span>
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'    '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"text-3xl font-bold"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}New Arrival!
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
+              </pre>
+              <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
+            </AnimatedScroll>
+            {/* Typewriter Example */}
+            <AnimatedScroll
+              effect="slideInRight"
+              triggerPoint={0.2}
+              duration={1000}
+              className="p-6 rounded-lg bg-gray-800/30 backdrop-blur-sm shadow-[0_0_15px_rgba(75,85,99,0.2)]"
+            >
+              <TypewriterText
+                text="Portfolio Hero Title"
+                duration={2}
+                textColor="text-pink-500"
+                className="text-xl font-semibold mb-4"
+              />
+              <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
+              <p className="text-gray-400 text-sm mb-4">
+                The `typewriter` effect simulates typing for hero titles.
+              </p>
+              <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>TypewriterText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/TypewriterText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>PortfolioHero</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>TypewriterText</span>
+                  <br />
+                  {'    '}text=<span style={{ color: '#a3e4a7' }}>"Portfolio Hero Title"</span>
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>2</span>}
+                  <br />
+                  {'    '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"text-4xl font-bold"</span>
+                  <br />
+                  {'  '}/&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
             {/* Burst Example */}
             <AnimatedScroll
-              effect="slideInRight"
-              triggerPoint={0.2}
+              effect="slideInLeft"
+              triggerPoint={0.25}
               duration={1000}
               className="p-6 rounded-lg bg-gray-800/30 backdrop-blur-sm shadow-[0_0_15px_rgba(75,85,99,0.2)]"
             >
@@ -156,60 +221,42 @@ const PortfolioHero = () => (
                 textColor="text-pink-500"
                 className="text-xl font-semibold mb-4"
               >
-                Product Highlight
-              </AnimatedText>
-              <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
-              <p className="text-gray-400 text-sm mb-4">
-                The `burst` effect emphasizes new products in e-commerce.
-              </p>
-              <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const ProductHighlight = () => (
-  <AnimatedText
-    effect="burst"
-    duration={1.5}
-    textColor="text-pink-500"
-    className="text-3xl font-bold"
-  >
-    New Arrival!
-  </AnimatedText>
-);`}
-              </pre>
-              <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
-            </AnimatedScroll>
-            {/* Pulse Example */}
-            <AnimatedScroll
-              effect="slideInLeft"
-              triggerPoint={0.25}
-              duration={1000}
-              className="p-6 rounded-lg bg-gray-800/30 backdrop-blur-sm shadow-[0_0_15px_rgba(75,85,99,0.2)]"
-            >
-              <AnimatedText
-                effect="pulse"
-                duration={1.5}
-                textColor="text-pink-500"
-                className="text-xl font-semibold mb-4"
-              >
                 Dashboard Callout
               </AnimatedText>
               <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
               <p className="text-gray-400 text-sm mb-4">
-                The `pulse` effect highlights key metrics in dashboards.
+                The `burst` effect emphasizes key metrics in dashboards.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const DashboardCallout = () => (
-  <AnimatedText
-    effect="pulse"
-    duration={1.5}
-    textColor="text-pink-500"
-    className="text-2xl font-bold"
-  >
-    Key Metrics
-  </AnimatedText>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>DashboardCallout</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"burst"</span>
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'    '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-bold"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}Key Metrics
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -233,22 +280,39 @@ const DashboardCallout = () => (
                 The `wave` effect adds smooth motion to testimonial quotes.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const Testimonial = () => (
-  <AnimatedText
-    effect="wave"
-    duration={1.5}
-    textColor="text-pink-500"
-    className="text-2xl font-semibold"
-  >
-    "Amazing Product!"
-  </AnimatedText>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>Testimonial</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"wave"</span>
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'    '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-semibold"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}"Amazing Product!"
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
-            {/* Shuffle Example */}
+            {/* Pulse Example */}
             <AnimatedScroll
               effect="slideInLeft"
               triggerPoint={0.3}
@@ -256,7 +320,7 @@ const Testimonial = () => (
               className="p-6 rounded-lg bg-gray-800/30 backdrop-blur-sm shadow-[0_0_15px_rgba(75,85,99,0.2)]"
             >
               <AnimatedText
-                effect="echo"
+                effect="pulse"
                 duration={1.5}
                 textColor="text-pink-500"
                 className="text-xl font-semibold mb-4"
@@ -265,21 +329,38 @@ const Testimonial = () => (
               </AnimatedText>
               <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
               <p className="text-gray-400 text-sm mb-4">
-                The `shuffle` effect dynamically highlights navigation links.
+                The `pulse` effect highlights navigation links dynamically.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const NavLink = () => (
-  <AnimatedText
-    effect="shuffle"
-    duration={1.5}
-    textColor="text-pink-500"
-    className="text-lg font-semibold"
-  >
-    Home
-  </AnimatedText>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>NavLink</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"pulse"</span>
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'    '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"text-lg font-semibold"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}Home
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -322,19 +403,37 @@ const NavLink = () => (
                 The `scrollFade` effect smoothly reveals blog content.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const BlogPost = () => (
-  <AnimatedScroll
-    effect="scrollFade"
-    triggerPoint={0.2}
-    duration={1000}
-    className="p-6"
-  >
-    <h2 className="text-2xl">Latest Article</h2>
-    <p>Engaging content here...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>BlogPost</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"scrollFade"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.2</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;Latest Article&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Engaging content here...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -351,19 +450,37 @@ const BlogPost = () => (
                 The `slideInLeft` effect enhances portfolio sections.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const PortfolioSection = () => (
-  <AnimatedScroll
-    effect="slideInLeft"
-    triggerPoint={0.3}
-    duration={1000}
-    className="p-6"
-  >
-    <h2 className="text-2xl">My Work</h2>
-    <p>Showcase projects here...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>PortfolioSection</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"slideInLeft"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.3</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;My Work&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Showcase projects here...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -380,19 +497,37 @@ const PortfolioSection = () => (
                 The `slideInRight` effect highlights e-commerce products.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const ProductGrid = () => (
-  <AnimatedScroll
-    effect="slideInRight"
-    triggerPoint={0.3}
-    duration={1000}
-    className="p-6"
-  >
-    <h2 className="text-2xl">Featured Products</h2>
-    <p>Product details here...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>ProductGrid</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"slideInRight"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.3</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;Featured Products&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Product details here...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -409,19 +544,37 @@ const ProductGrid = () => (
                 The `zoomIn` effect draws attention to testimonial cards.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const TestimonialCard = () => (
-  <AnimatedScroll
-    effect="zoomIn"
-    triggerPoint={0.3}
-    duration={1000}
-    className="p-6"
-  >
-    <h2 className="text-2xl">"Great Experience!"</h2>
-    <p>Client feedback here...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>TestimonialCard</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"zoomIn"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.3</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;"Great Experience!"&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Client feedback here...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -438,19 +591,37 @@ const TestimonialCard = () => (
                 The `rotateIn` effect adds flair to footer sections.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const Footer = () => (
-  <AnimatedScroll
-    effect="rotateIn"
-    triggerPoint={0.3}
-    duration={1000}
-    className="p-6"
-  >
-    <h2 className="text-2xl">Contact Us</h2>
-    <p>Footer links here...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>Footer</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"rotateIn"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.3</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;Contact Us&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Footer links here...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -487,40 +658,63 @@ const Footer = () => (
               duration={1000}
               className="p-6 rounded-lg bg-gray-800/30 backdrop-blur-sm shadow-[0_0_15px_rgba(75,85,99,0.2)]"
             >
-              <AnimatedText
-                effect="burst"
-                duration={1.5}
+              <TypewriterText
+                text="Summer Sale"
+                duration={2}
                 textColor="text-pink-500"
                 className="text-xl font-semibold mb-4"
-              >
-                Summer Sale
-              </AnimatedText>
+              />
               <hr className="border-gray-700 mb-4 max-w-xs mx-auto" />
               <p className="text-gray-400 text-sm mb-4">
-                Uses `scrollFade` and `burst` for an e-commerce landing page.
+                Uses `scrollFade` and `typewriter` for an e-commerce landing page.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const LandingSection = () => (
-  <AnimatedScroll
-    effect="scrollFade"
-    triggerPoint={0.2}
-    duration={1000}
-    className="p-6"
-  >
-    <AnimatedText
-      effect="burst"
-      duration={1.5}
-      textColor="text-pink-500"
-      className="text-2xl font-bold"
-    >
-      Summer Sale
-    </AnimatedText>
-    <p>Shop now and save big!</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>TypewriterText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/TypewriterText'</span>;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>LandingSection</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"scrollFade"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.2</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>TypewriterText</span>
+                  <br />
+                  {'      '}text=<span style={{ color: '#a3e4a7' }}>"Summer Sale"</span>
+                  <br />
+                  {'      '}duration={<span style={{ color: '#f472b6' }}>2</span>}
+                  <br />
+                  {'      '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'      '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-bold"</span>
+                  <br />
+                  {'    '}/&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Shop now and save big!&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -544,27 +738,56 @@ const LandingSection = () => (
                 Combines `slideInLeft` and `ripple` for portfolio projects.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const ProjectSection = () => (
-  <AnimatedScroll
-    effect="slideInLeft"
-    triggerPoint={0.2}
-    duration={1000}
-    className="p-6"
-  >
-    <AnimatedText
-      effect="ripple"
-      duration={1.5}
-      textColor="text-pink-500"
-      className="text-2xl font-bold"
-    >
-      Project Showcase
-    </AnimatedText>
-    <p>View my latest work...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>ProjectSection</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"slideInLeft"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.2</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'      '}effect=<span style={{ color: '#a3e4a7' }}>"ripple"</span>
+                  <br />
+                  {'      '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'      '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'      '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-bold"</span>
+                  <br />
+                  {'    '}&gt;
+                  <br />
+                  {'      '}Project Showcase
+                  <br />
+                  {'    '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;View my latest work...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -588,27 +811,56 @@ const ProjectSection = () => (
                 Uses `zoomIn` and `pulse` for dashboard widgets.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const DataWidget = () => (
-  <AnimatedScroll
-    effect="zoomIn"
-    triggerPoint={0.2}
-    duration={1000}
-    className="p-6"
-  >
-    <AnimatedText
-      effect="pulse"
-      duration={1.5}
-      textColor="text-pink-500"
-      className="text-2xl font-bold"
-    >
-      Data Widget
-    </AnimatedText>
-    <p>Real-time insights...</p>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>DataWidget</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"zoomIn"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.2</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'      '}effect=<span style={{ color: '#a3e4a7' }}>"pulse"</span>
+                  <br />
+                  {'      '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'      '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'      '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-bold"</span>
+                  <br />
+                  {'    '}&gt;
+                  <br />
+                  {'      '}Data Widget
+                  <br />
+                  {'    '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>p</span>&gt;Real-time insights...&lt;/p&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -651,20 +903,39 @@ const DataWidget = () => (
                 Hint to browsers which properties will animate to optimize rendering.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedText from '@/app/components/animations/AnimatedText';
-
-const OptimizedText = () => (
-  <div style={{ willChange: 'transform, opacity' }}>
-    <AnimatedText
-      effect="ripple"
-      duration={1.5}
-      textColor="text-pink-500"
-      className="text-2xl font-bold"
-    >
-      Optimized Animation
-    </AnimatedText>
-  </div>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>OptimizedText</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;div style=&#123; &#123; willChange: 'transform, opacity' &#125; &#125;&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedText</span>
+                  <br />
+                  {'      '}effect=<span style={{ color: '#a3e4a7' }}>"ripple"</span>
+                  <br />
+                  {'      '}duration={<span style={{ color: '#f472b6' }}>1.5</span>}
+                  <br />
+                  {'      '}textColor=<span style={{ color: '#a3e4a7' }}>"text-pink-500"</span>
+                  <br />
+                  {'      '}className=<span style={{ color: '#a3e4a7' }}>"text-2xl font-bold"</span>
+                  <br />
+                  {'    '}&gt;
+                  <br />
+                  {'      '}Optimized Animation
+                  <br />
+                  {'    '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedText</span>&gt;
+                  <br />
+                  {'  '}&lt;/div&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
@@ -681,20 +952,39 @@ const OptimizedText = () => (
                 Use simple transforms to reduce reflows and repaints.
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
-                {`import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
-
-const OptimizedScroll = () => (
-  <AnimatedScroll
-    effect="slideInLeft"
-    triggerPoint={0.2}
-    duration={1000}
-    className="p-6"
-  >
-    <div style={{ transform: 'translate3d(0, 0, 0)' }}>
-      <h2 className="text-2xl">Lightweight Animation</h2>
-    </div>
-  </AnimatedScroll>
-);`}
+                <code>
+                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>AnimatedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>from</span>{' '}
+                  <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedScroll'</span>;
+                  <br />
+                  <br />
+                  <span style={{ color: '#f472b6' }}>const</span>{' '}
+                  <span style={{ color: '#a3bffa' }}>OptimizedScroll</span>{' '}
+                  <span style={{ color: '#f472b6' }}>= () =&gt; (</span>
+                  <br />
+                  {'  '}&lt;<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>
+                  <br />
+                  {'    '}effect=<span style={{ color: '#a3e4a7' }}>"slideInLeft"</span>
+                  <br />
+                  {'    '}triggerPoint={<span style={{ color: '#f472b6' }}>0.2</span>}
+                  <br />
+                  {'    '}duration={<span style={{ color: '#f472b6' }}>1000</span>}
+                  <br />
+                  {'    '}className=<span style={{ color: '#a3e4a7' }}>"p-6"</span>
+                  <br />
+                  {'  '}&gt;
+                  <br />
+                  {'    '}&lt;<span style={{ color: '#a3bffa' }}>div</span> style=&#123; &#123; transform: <span style={{ color: '#a3e4a7' }}>"translate3d(0, 0, 0)"</span> &#125; &#125;&gt;
+                  <br />
+                  {'      '}&lt;<span style={{ color: '#a3bffa' }}>h2</span> className=<span style={{ color: '#a3e4a7' }}>"text-2xl"</span>&gt;Lightweight Animation&lt;/h2&gt;
+                  <br />
+                  {'    '}&lt;/div&gt;
+                  <br />
+                  {'  '}&lt;/<span style={{ color: '#a3bffa' }}>AnimatedScroll</span>&gt;
+                  <br />
+                  <span style={{ color: '#f472b6' }}>);</span>
+                </code>
               </pre>
               <hr className="border-gray-700 mt-4 max-w-xs mx-auto" />
             </AnimatedScroll>
