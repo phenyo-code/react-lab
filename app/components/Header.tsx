@@ -1,7 +1,10 @@
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
+import { Type, Mouse, PenTool, Box } from 'lucide-react';
+
 import Link from 'next/link';
 import { motion, AnimatePresence, Variants, useInView } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
@@ -24,9 +27,10 @@ const Header: React.FC = () => {
       href: '/animations',
       label: 'Animations',
       subLinks: [
-        { href: '/animations/text', label: 'Text' },
-        { href: '/animations/scroll', label: 'Scroll' },
-        { href: '/animations/svg', label: 'SVG' },
+        { href: '/animations/text', label: 'Text', icon: Type },
+        { href: '/animations/scroll', label: 'Scroll', icon: Mouse },
+        { href: '/animations/svg', label: 'SVG', icon: PenTool },
+        { href: '/animations/3d', label: '3D', icon: Box },
       ],
     },
     { href: '/docs', label: 'Docs' },
@@ -69,18 +73,15 @@ const Header: React.FC = () => {
       const rect = svgRef.current.querySelector('rect');
       if (!rect) return;
 
-      // Get link dimensions
       const { width, height } = linkRef.current.getBoundingClientRect();
       svgRef.current.setAttribute('width', `${width}`);
       svgRef.current.setAttribute('height', `${height}`);
-      rect.setAttribute('width', `${width - 2}`); // Account for stroke width
+      rect.setAttribute('width', `${width - 2}`);
       rect.setAttribute('height', `${height - 2}`);
 
-      // Calculate perimeter for strokeDasharray
-      const perimeter = 2 * (width + height - 4); // Adjust for stroke width
+      const perimeter = 2 * (width + height - 4);
       gsap.set(rect, { strokeDasharray: perimeter, strokeDashoffset: perimeter });
 
-      // Draw-on animation
       gsap.to(rect, {
         strokeDashoffset: 0,
         duration: 2,
@@ -89,7 +90,6 @@ const Header: React.FC = () => {
         yoyo: true,
       });
 
-      // Glow effect
       gsap.to(rect, {
         filter: 'url(#glow)',
         duration: 0.5,
@@ -191,10 +191,24 @@ const Header: React.FC = () => {
                         >
                           <Link
                             href={subLink.href}
-                            className="block px-4 py-2 text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 text-base"
+                            className="flex items-center px-4 py-2 text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 text-base"
                             onClick={() => setIsAnimationsOpen(false)}
                           >
-                            {subLink.label}
+                            {subLink.icon && (
+                              <AnimatedSVG
+                                type="icon"
+                                effect="iconNeonDraw"
+                                Icon={subLink.icon}
+                                strokeColor="#ff6ac1"
+                                glowColor="rgba(255, 106, 193, 0.7)"
+                                duration={Infinity}
+                                delay={0.0}
+                                className="w-6 h-6 mr-2 shrink-0"
+                                width={20}
+                                height={20}
+                              />
+                            )}
+                            <span>{subLink.label}</span>
                           </Link>
                         </li>
                       ))}
@@ -255,13 +269,27 @@ const Header: React.FC = () => {
                             >
                               <Link
                                 href={subLink.href}
-                                className="block text-base text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200"
+                                className="flex items-center text-base text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200"
                                 onClick={() => {
                                   setIsMenuOpen(false);
                                   setIsAnimationsOpen(false);
                                 }}
                               >
-                                {subLink.label}
+                                {subLink.icon && (
+                                  <AnimatedSVG
+                                    type="icon"
+                                    effect="iconNeonDraw"
+                                    Icon={subLink.icon}
+                                    strokeColor="#ff6ac1"
+                                    glowColor="rgba(255, 106, 193, 0.7)"
+                                    duration={Infinity}
+                                    delay={0.5}
+                                    className="w-4 h-4 mr-2 shrink-0"
+                                    width={16}
+                                    height={16}
+                                  />
+                                )}
+                                <span>{subLink.label}</span>
                               </Link>
                             </li>
                           ))}

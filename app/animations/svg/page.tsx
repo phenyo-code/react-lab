@@ -1,259 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
+import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
 import AnimatedSVG from '@/app/components/animations/AnimatedSVG';
 import Header from '@/app/components/Header';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import Lenis from '@studio-freight/lenis';
+import Footer from '@/app/components/Footer';
 import Link from 'next/link';
-import { FiPlay, FiStar } from 'react-icons/fi';
-import { Play, Star } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import Lenis from '@studio-freight/lenis';
+import { Star } from 'lucide-react';
 
-const SVGAnimations: React.FC = () => {
-  const [inputText, setTextInput] = useState('Type your text');
-  const [selectedEffect, setEffect] = useState<
-    | 'neonDraw'
-    | 'fireDraw'
-    | 'electricDraw'
-    | 'inkDraw'
-    | 'pulseDraw'
-    | 'scribbleDraw'
-    | 'waterDraw'
-    | 'goldDraw'
-    | 'vortexDraw'
-    | 'frostDraw'
-    | 'shadowDraw'
-    | 'sandDraw'
-    | 'smokeDraw'
-    | 'waveDraw'
-    | 'fadeDraw'
-    | 'whiteNeonDraw'
-    | 'customColorDraw'
-    | 'borderDraw'
-    | 'dashedBorderDraw'
-    | 'pulseBorderDraw'
-  >('neonDraw');
-  const [selectedType, setType] = useState<'text' | 'border' | 'icon'>('text');
-  const [selectedIcon, setSelectedIcon] = useState<string>('FiPlay');
-  const [customColor, setCustomColor] = useState('#ff6ac1');
-
-  interface AnimationConfig {
-    effect:
-      | 'neonDraw'
-      | 'fireDraw'
-      | 'electricDraw'
-      | 'inkDraw'
-      | 'pulseDraw'
-      | 'scribbleDraw'
-      | 'waterDraw'
-      | 'goldDraw'
-      | 'vortexDraw'
-      | 'frostDraw'
-      | 'shadowDraw'
-      | 'sandDraw'
-      | 'smokeDraw'
-      | 'waveDraw'
-      | 'fadeDraw'
-      | 'whiteNeonDraw'
-      | 'customColorDraw'
-      | 'borderDraw'
-      | 'dashedBorderDraw'
-      | 'pulseBorderDraw';
-    text: string;
-    description: string;
-    color: string;
-    type: 'text' | 'border' | 'icon';
-    icon?: string;
-  }
-
-  const animations: AnimationConfig[] = [
-    {
-      effect: 'neonDraw',
-      text: 'Neon Draw',
-      description: 'Text draws with a pulsating neon glow and flicker.',
-      color: '#ff6ac1',
-      type: 'text',
-    },
-    {
-      effect: 'fireDraw',
-      text: 'Fire Draw',
-      description: 'Text draws with a fiery orange-red stroke and glowing flame effect.',
-      color: '#ff4500',
-      type: 'text',
-    },
-    {
-      effect: 'electricDraw',
-      text: 'Electric Draw',
-      description: 'Text draws with a jagged electric-blue stroke and sparking distortion.',
-      color: '#00b7eb',
-      type: 'text',
-    },
-    {
-      effect: 'inkDraw',
-      text: 'Ink Draw',
-      description: 'Text draws like wet ink with a dripping, turbulent effect.',
-      color: '#000000',
-      type: 'text',
-    },
-    {
-      effect: 'pulseDraw',
-      text: 'Pulse Draw',
-      description: 'Text draws with a pulsating stroke width and color-shifting glow.',
-      color: '#ff6ac1',
-      type: 'text',
-    },
-    {
-      effect: 'scribbleDraw',
-      text: 'Scribble Draw',
-      description: 'Text draws with a hand-drawn, scribbled effect.',
-      color: '#333333',
-      type: 'text',
-    },
-    {
-      effect: 'waterDraw',
-      text: 'Water Draw',
-      description: 'Text flows like water with a rippling, fluid motion.',
-      color: '#00ced1',
-      type: 'text',
-    },
-    {
-      effect: 'goldDraw',
-      text: 'Gold Draw',
-      description: 'Text draws with a luxurious gold stroke and subtle shine.',
-      color: '#ffd700',
-      type: 'text',
-    },
-    {
-      effect: 'vortexDraw',
-      text: 'Vortex Draw',
-      description: 'Text draws with a static vortex pattern.',
-      color: '#8a2be2',
-      type: 'text',
-    },
-    {
-      effect: 'frostDraw',
-      text: 'Frost Draw',
-      description: 'Text draws slowly with a frosty blue glow.',
-      color: '#87ceeb',
-      type: 'text',
-    },
-    {
-      effect: 'shadowDraw',
-      text: 'Shadow Draw',
-      description: 'Text draws with a slow, shadowy effect.',
-      color: '#666666',
-      type: 'text',
-    },
-    {
-      effect: 'sandDraw',
-      text: 'Sand Draw',
-      description: 'Text draws very slowly like falling sand.',
-      color: '#f4a460',
-      type: 'text',
-    },
-    {
-      effect: 'smokeDraw',
-      text: 'Smoke Draw',
-      description: 'Text draws slowly with a smoky, diffused effect.',
-      color: '#a9a9a9',
-      type: 'text',
-    },
-    {
-      effect: 'waveDraw',
-      text: 'Wave Draw',
-      description: 'Text draws with a slow, wavy motion.',
-      color: '#20b2aa',
-      type: 'text',
-    },
-    {
-      effect: 'fadeDraw',
-      text: 'Fade Draw',
-      description: 'Text draws slowly with a fading effect.',
-      color: '#dda0dd',
-      type: 'text',
-    },
-    {
-      effect: 'whiteNeonDraw',
-      text: 'White Neon Draw',
-      description: 'Text draws with a white neon-like stroke without glow.',
-      color: '#ffffff',
-      type: 'text',
-    },
-    {
-      effect: 'customColorDraw',
-      text: 'Custom Color Draw',
-      description: 'Text draws with a customizable color stroke.',
-      color: '#ff6ac1',
-      type: 'text',
-    },
-    {
-      effect: 'borderDraw',
-      text: 'Border Draw',
-      description: 'Border draws with a neon glow, similar to the Play link.',
-      color: '#ff6ac1',
-      type: 'border',
-    },
-    {
-      effect: 'dashedBorderDraw',
-      text: 'Dashed Border Draw',
-      description: 'Dashed border draws with a continuous motion.',
-      color: '#ff6ac1',
-      type: 'border',
-    },
-    {
-      effect: 'pulseBorderDraw',
-      text: 'Pulse Border Draw',
-      description: 'Border draws with a pulsating stroke width and glow.',
-      color: '#ff6ac1',
-      type: 'border',
-    },
-    {
-      effect: 'neonDraw',
-      text: 'Icon Neon Draw',
-      description: 'Icon draws with a pulsating neon glow.',
-      color: '#ff6ac1',
-      type: 'icon',
-      icon: 'FiPlay',
-    },
-    {
-      effect: 'fireDraw',
-      text: 'Icon Fire Draw',
-      description: 'Icon draws with a fiery orange-red stroke and glow.',
-      color: '#ff4500',
-      type: 'icon',
-      icon: 'Play',
-    },
-    {
-      effect: 'customColorDraw',
-      text: 'Icon Custom Color Draw',
-      description: 'Icon draws with a customizable color stroke.',
-      color: '#ff6ac1',
-      type: 'icon',
-      icon: 'FiStar',
-    },
-  ];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value || 'Type your text');
-  };
-
-  const handleEffectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setEffect(e.target.value as typeof selectedEffect);
-  };
-
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setType(e.target.value as typeof selectedType);
-  };
-
-  const handleIconChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedIcon(e.target.value);
-  };
-
-  const handleCustomColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomColor(e.target.value);
-  };
-
+const SVGs: React.FC = () => {
+  // Initialize Lenis for smooth scrolling
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -269,36 +28,151 @@ const SVGAnimations: React.FC = () => {
     return () => lenis.destroy();
   }, []);
 
+  // Scroll-based slide-up effect
   const { scrollYProgress } = useScroll();
   const yRange = useTransform(scrollYProgress, [0, 0.2], [50, 0]);
   const opacityRange = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
-  const iconMap: { [key: string]: any } = {
-    FiPlay,
-    FiStar,
-    Play,
-    Star,
+  interface SvgDemo {
+    title: string;
+    description: string;
+    svgEffect:
+      | 'neonDraw'
+      | 'fireDraw'
+      | 'electricDraw'
+      | 'borderDraw'
+      | 'dashedBorderDraw'
+      | 'pulseBorderDraw'
+      | 'iconNeonDraw'
+      | 'iconFireDraw'
+      | 'iconCustomColorDraw';
+    type: 'text' | 'border' | 'icon';
+  }
+
+  const svgDemos: SvgDemo[] = [
+    {
+      title: 'Neon Draw',
+      description: 'Glowing neon draw-on effect for vibrant text animations.',
+      svgEffect: 'neonDraw',
+      type: 'text',
+    },
+    {
+      title: 'Fire Draw',
+      description: 'Fiery draw-on effect for bold, attention-grabbing text.',
+      svgEffect: 'fireDraw',
+      type: 'text',
+    },
+    {
+      title: 'Electric Draw',
+      description: 'Sparking electric effect for dynamic text displays.',
+      svgEffect: 'electricDraw',
+      type: 'text',
+    },
+    {
+      title: 'Border Draw',
+      description: 'Smooth draw-on effect for outlined borders.',
+      svgEffect: 'borderDraw',
+      type: 'border',
+    },
+    {
+      title: 'Dashed Border Draw',
+      description: 'Dashed border animation for stylish UI frames.',
+      svgEffect: 'dashedBorderDraw',
+      type: 'border',
+    },
+    {
+      title: 'Pulse Border Draw',
+      description: 'Pulsing border effect for dynamic outlines.',
+      svgEffect: 'pulseBorderDraw',
+      type: 'border',
+    },
+    {
+      title: 'Icon Neon Draw',
+      description: 'Neon draw-on effect for SVG icons, ideal for logos.',
+      svgEffect: 'iconNeonDraw',
+      type: 'icon',
+    },
+    {
+      title: 'Icon Fire Draw',
+      description: 'Fiery draw-on effect for striking icon animations.',
+      svgEffect: 'iconFireDraw',
+      type: 'icon',
+    },
+    {
+      title: 'Icon Custom Color Draw',
+      description: 'Customizable color draw-on effect for icons.',
+      svgEffect: 'iconCustomColorDraw',
+      type: 'icon',
+    },
+  ];
+
+  const gradientBackground = {
+    backgroundImage: `
+      linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(-135deg, rgba(255,255,255,0.02) 1px, transparent 1px)
+    `,
+    backgroundSize: '15px 15px',
+  };
+
+  // State for Try It Out section
+  const [svgTryText, setSvgTryText] = useState('React Animations');
+  const [selectedSvgEffect, setSvgEffect] = useState<
+    | 'neonDraw'
+    | 'fireDraw'
+    | 'electricDraw'
+    | 'borderDraw'
+    | 'dashedBorderDraw'
+    | 'pulseBorderDraw'
+    | 'iconNeonDraw'
+    | 'iconFireDraw'
+    | 'iconCustomColorDraw'
+  >('neonDraw');
+  const [svgType, setSvgType] = useState<'text' | 'border' | 'icon'>('text');
+  const [customColor, setCustomColor] = useState('#ff6ac1');
+
+  const handleSvgTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSvgTryText(e.target.value || 'React Animations');
+  };
+
+  const handleSvgEffectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newEffect = e.target.value as typeof selectedSvgEffect;
+    setSvgEffect(newEffect);
+    if (newEffect.startsWith('icon')) {
+      setSvgType('icon');
+    } else if (['borderDraw', 'dashedBorderDraw', 'pulseBorderDraw'].includes(newEffect)) {
+      setSvgType('border');
+    } else {
+      setSvgType('text');
+    }
+  };
+
+  const handleSvgTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newType = e.target.value as 'text' | 'border' | 'icon';
+    setSvgType(newType);
+    if (newType === 'icon') {
+      setSvgEffect('iconNeonDraw');
+    } else if (newType === 'border') {
+      setSvgEffect('borderDraw');
+    } else {
+      setSvgEffect('neonDraw');
+    }
+  };
+
+  const handleCustomColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomColor(e.target.value);
   };
 
   return (
-    <div
-      className="min-h-screen bg-[#1A1A1A] text-white font-sans relative"
-      style={{
-        backgroundImage: `
-          linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(30deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-30deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-        `,
-        backgroundSize: '15px 15px',
-      }}
-    >
+    <div className="min-h-screen bg-[#1A1A1A] text-white font-sans">
+      {/* Header */}
       <Header />
-      <section className="py-24 px-6 max-w-7xl mx-auto text-center border-b border-gray-700">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+
+      {/* Hero Section */}
+      <section className="py-16 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
+        <AnimatedScroll effect="slideInLeft" triggerPoint={0.1} duration={1000} className="flex flex-col items-center">
           <AnimatedSVG
             text="SVG Animations"
             effect="neonDraw"
@@ -308,157 +182,242 @@ const SVGAnimations: React.FC = () => {
             className="text-4xl md:text-5xl font-bold tracking-tight"
             fontSize="60px"
             fontFamily="Inter, Arial, sans-serif"
-            type="text"
           />
-        </h1>
-        <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-8">
-          Unleash breathtaking SVG draw-on animations with ReAnime. Powered by GSAP and Framer Motion, perfect for logos, borders, and icons.
-        </p>
-        <Link
-          href="#try-it-out"
-          className="inline-block bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition-colors duration-200 text-lg font-medium"
-        >
-          Explore SVG Animations
-        </Link>
-      </section>
-      <section id="try-it-out" className="py-16 px-6 max-w-7xl mx-auto border-b border-gray-700">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-8 tracking-tight"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          Try It Out
-        </motion.h2>
-        <motion.div
-          className="flex flex-col md:flex-row gap-4 justify-center items-center mb-12"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          <select
-            value={selectedType}
-            onChange={handleTypeChange}
-            className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-32"
+          <hr className="border-gray-700 my-6 max-w-md mx-auto" />
+          <motion.p
+            className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
+            style={{ y: yRange, opacity: opacityRange }}
           >
-            <option value="text">Text</option>
-            <option value="border">Border</option>
-            <option value="icon">Icon</option>
-          </select>
-          {selectedType === 'text' && (
-            <input
-              type="text"
-              value={inputText === 'Type your text' ? '' : inputText}
-              onChange={handleInputChange}
-              placeholder="Type your text"
-              className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-96"
-            />
-          )}
-          {selectedType === 'icon' && (
-            <select
-              value={selectedIcon}
-              onChange={handleIconChange}
-              className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-32"
-            >
-              <option value="FiPlay">FiPlay</option>
-              <option value="FiStar">FiStar</option>
-              <option value="Play">Play</option>
-              <option value="Star">Star</option>
-            </select>
-          )}
-          <select
-            value={selectedEffect}
-            onChange={handleEffectChange}
-            className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-64"
-          >
-            {animations
-              .filter((anim) => anim.type === selectedType)
-              .map(({ effect, text }) => (
-                <option key={effect} value={effect} className="bg-gray-900 text-white">
-                  {text}
-                </option>
-              ))}
-          </select>
-          {selectedEffect === 'customColorDraw' && (
-            <input
-              type="color"
-              value={customColor}
-              onChange={handleCustomColorChange}
-              className="w-12 h-12 rounded-full border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
-            />
-          )}
-        </motion.div>
-        <motion.div
-          className="p-8 rounded-2xl bg-gray-800 border border-gray-700 min-h-[20vh] flex items-center justify-center"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          <AnimatedSVG
-            text={inputText}
-            type={selectedType}
-            effect={selectedEffect}
-            duration={Infinity}
-            textColor="#ffffff"
-            strokeColor={animations.find((a) => a.effect === selectedEffect)?.color || '#ff6ac1'}
-            customStrokeColor={selectedEffect === 'customColorDraw' ? customColor : undefined}
-            className="text-2xl md:text-3xl font-bold tracking-tight"
-            fontSize={selectedType === 'text' ? '48px' : selectedType === 'border' ? '24px' : '24px'}
-            fontFamily="Inter, Arial, sans-serif"
-            Icon={selectedType === 'icon' ? iconMap[selectedIcon] : undefined}
-          />
-        </motion.div>
+            Discover the power of SVG animations with the React Animations library. From neon and fire draw-on effects to dynamic border and icon animations, enhance your Next.js projects with `npm install react-animations`. Preview all SVG effects below and try them out interactively to bring your UI to life.
+          </motion.p>
+          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/docs"
+                className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                aria-label="Get Started with Documentation"
+              >
+                Get Started
+              </Link>
+            </motion.div>
+          </div>
+        </AnimatedScroll>
       </section>
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 tracking-tight"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          SVG Animation Showcase
-        </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {animations.map(({ effect, text, description, color, type, icon }, index) => (
-            <motion.div
-              key={effect}
-              className={`p-6 rounded-lg bg-gray-800 border border-gray-700 ${
-                index % 4 !== 3 ? 'lg:border-r-0' : ''
-              } ${index < animations.length - (animations.length % 4 || 4) ? 'border-b-0 sm:border-b' : ''}`}
-              style={{ y: yRange, opacity: opacityRange }}
+
+      {/* SVG Animation Showcase */}
+      <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>
+        <AnimatedScroll effect="slideInRight" triggerPoint={0.2} duration={1000} className="text-center">
+          <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for SVG showcase scroll">
+            effect="slideInRight" triggerPoint={0.2} duration={1000}
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+            SVG Animation Showcase
+          </h2>
+          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+            Explore the `AnimatedSVG` component with draw-on effects for text, borders, and icons. From glowing neon to fiery icon animations, these effects are perfect for logos, branding, and dynamic UI elements in your Next.js projects.
+          </p>
+          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+        </AnimatedScroll>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {svgDemos.map(({ title, description, svgEffect, type }, index) => (
+            <AnimatedScroll
+              key={title}
+              effect={index % 2 === 0 ? 'slideInLeft' : 'slideInRight'}
+              triggerPoint={0.2 + index * 0.1}
+              duration={1000}
+              className={`py-4 flex flex-col items-center text-center ${
+                index < svgDemos.length - 1 ? 'md:border-r md:border-gray-700' : ''
+              } ${index === 0 ? 'border-t md:border-t-0 pt-6 md:pt-4' : ''}`}
             >
               <AnimatedSVG
-                text={text}
+                text={type === 'text' ? title : undefined}
                 type={type}
-                effect={effect}
-                duration={Infinity}
+                effect={svgEffect}
+                duration={1.5}
                 textColor="#ffffff"
-                strokeColor={color}
-                className="text-xl font-semibold mb-4 tracking-tight"
-                fontSize={type === 'text' ? '24px' : type === 'border' ? '16px' : '24px'}
+                strokeColor={
+                  {
+                    neonDraw: '#ff6ac1',
+                    fireDraw: '#ff4500',
+                    electricDraw: '#00b7eb',
+                    borderDraw: '#ff6ac1',
+                    dashedBorderDraw: '#ff6ac1',
+                    pulseBorderDraw: '#ff6ac1',
+                    iconNeonDraw: '#ff6ac1',
+                    iconFireDraw: '#ff4500',
+                    iconCustomColorDraw: '#ff6ac1',
+                  }[svgEffect]
+                }
+                glowColor={
+                  svgEffect === 'fireDraw' || svgEffect === 'iconFireDraw'
+                    ? 'rgba(255, 69, 0, 0.8)'
+                    : 'rgba(255, 106, 193, 0.7)'
+                }
+                customStrokeColor={
+                  svgEffect === 'iconCustomColorDraw' ? '#ff6ac1' : undefined
+                }
+                Icon={type === 'icon' ? Star : undefined}
+                className="text-xl font-semibold mb-2"
+                fontSize="24px"
                 fontFamily="Inter, Arial, sans-serif"
-                Icon={type === 'icon' && icon ? iconMap[icon] : undefined}
+                width={type === 'icon' ? 24 : undefined}
+                height={type === 'icon' ? 24 : undefined}
               />
-              <p className="text-gray-400 text-sm">{description}</p>
-            </motion.div>
+              <hr className="border-gray-700 my-2 max-w-xs mx-auto" />
+              <p className="text-gray-400 text-sm max-w-xs">{description}</p>
+              <hr className="border-gray-700 my-2 max-w-xs mx-auto" />
+            </AnimatedScroll>
           ))}
         </div>
       </section>
-      <footer className="py-8 px-6 text-center text-gray-400 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center gap-6 mb-4">
-            <Link href="/docs" className="hover:text-pink-500 transition-colors duration-200">
-              Docs
-            </Link>
-            <Link href="/animations" className="hover:text-pink-500 transition-colors duration-200">
-              Showcase
-            </Link>
-            <Link
-              href="https://github.com/your-repo/react-lab"
-              className="hover:text-pink-500 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
+
+      {/* SVG Try It Out Section */}
+      <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>
+        <AnimatedScroll effect="slideInLeft" triggerPoint={0.3} duration={1000} className="text-center">
+          <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for SVG tryout scroll">
+            effect="slideInLeft" triggerPoint={0.3} duration={1000}
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+            Try SVG Animations
+          </h2>
+          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+            Experiment with SVG animations for text, borders, or icons. Customize text, select an effect, choose a type, and pick a color to preview the animation in real-time.
+          </p>
+          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+          <motion.div className="flex flex-col md:flex-row gap-6 justify-center mb-8" style={{ y: yRange, opacity: opacityRange }}>
+            <input
+              type="text"
+              value={svgTryText === 'React Animations' ? '' : svgTryText}
+              onChange={handleSvgTextChange}
+              placeholder="Enter your text"
+              className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-96"
+              disabled={svgType !== 'text'}
+            />
+            <select
+              value={svgType}
+              onChange={handleSvgTypeChange}
+              className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-32"
             >
-              GitHub
-            </Link>
+              {['text', 'border', 'icon'].map((type) => (
+                <option key={type} value={type} className="bg-gray-900 text-white">
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedSvgEffect}
+              onChange={handleSvgEffectChange}
+              className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-64"
+            >
+              {(svgType === 'icon'
+                ? ['iconNeonDraw', 'iconFireDraw', 'iconCustomColorDraw']
+                : svgType === 'border'
+                ? ['borderDraw', 'dashedBorderDraw', 'pulseBorderDraw']
+                : ['neonDraw', 'fireDraw', 'electricDraw']
+              ).map((effect) => (
+                <option key={effect} value={effect} className="bg-gray-900 text-white">
+                  {effect
+                    .replace(/([A-Z])/g, ' $1')
+                    .trim()
+                    .replace(/^./, (str) => str.toUpperCase())
+                    .replace('Draw', ' Draw')}
+                </option>
+              ))}
+            </select>
+            {(selectedSvgEffect === 'iconCustomColorDraw') && (
+              <input
+                type="color"
+                value={customColor}
+                onChange={handleCustomColorChange}
+                className="w-12 h-12 rounded-full border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+              />
+            )}
+          </motion.div>
+          <motion.div
+            className="p-6 rounded-2xl bg-gray-800 border border-gray-700 flex items-center justify-center"
+            style={{ y: yRange, opacity: opacityRange }}
+          >
+            <AnimatedSVG
+              text={svgType === 'text' ? svgTryText : undefined}
+              type={svgType}
+              effect={selectedSvgEffect}
+              duration={Infinity}
+              textColor="#ffffff"
+              strokeColor={
+                {
+                  neonDraw: '#ff6ac1',
+                  fireDraw: '#ff4500',
+                  electricDraw: '#00b7eb',
+                  borderDraw: '#ff6ac1',
+                  dashedBorderDraw: '#ff6ac1',
+                  pulseBorderDraw: '#ff6ac1',
+                  iconNeonDraw: '#ff6ac1',
+                  iconFireDraw: '#ff4500',
+                  iconCustomColorDraw: customColor,
+                }[selectedSvgEffect] || '#ff6ac1'
+              }
+              glowColor={
+                selectedSvgEffect === 'fireDraw' || selectedSvgEffect === 'iconFireDraw'
+                  ? 'rgba(255, 69, 0, 0.8)'
+                  : 'rgba(255, 106, 193, 0.7)'
+              }
+              customStrokeColor={
+                selectedSvgEffect === 'iconCustomColorDraw' ? customColor : undefined
+              }
+              Icon={svgType === 'icon' ? Star : undefined}
+              className="text-2xl md:text-3xl font-bold tracking-tight"
+              fontSize="48px"
+              fontFamily="Inter, Arial, sans-serif"
+              width={svgType === 'icon' ? 48 : undefined}
+              height={svgType === 'icon' ? 48 : undefined}
+            />
+          </motion.div>
+        </AnimatedScroll>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700">
+        <AnimatedScroll effect="slideInLeft" triggerPoint={0.4} duration={1000} className="text-center">
+          <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for CTA scroll">
+            effect="slideInLeft" triggerPoint={0.4} duration={1000}
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+            Start Animating with SVGs
+          </h2>
+          <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+            Elevate your Next.js projects with stunning SVG animations using `react-animations`. Install via `npm install react-animations` to access our lightweight, TypeScript-friendly library. Dive into our documentation for setup guides or join our community to collaborate and learn.
+          </p>
+          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/docs"
+                className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                aria-label="Get Started with Docs"
+              >
+                Get Started
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="https://github.com/your-repo/react-animations"
+                className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-300"
+                aria-label="Contribute on GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Contribute
+              </Link>
+            </motion.div>
           </div>
-          <p>Copyright © 2025 React Lab. All rights reserved.</p>
-        </div>
-      </footer>
+        </AnimatedScroll>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
 
-export default SVGAnimations;
+export default SVGs;

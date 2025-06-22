@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -7,11 +6,13 @@ import { motion, useInView } from 'framer-motion';
 import { gsap } from 'gsap';
 import { IconType } from 'react-icons';
 import { LucideIcon } from 'lucide-react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { parse } from 'svg-parser';
 
 interface AnimatedSVGProps {
   text?: string;
   type?: 'text' | 'border' | 'icon';
-  effect?: string
+  effect?:
     | 'iconNeonDraw'
     | 'iconFireDraw'
     | 'iconCustomColorDraw'
@@ -45,6 +46,8 @@ interface AnimatedSVGProps {
   fontFamily?: string;
   customStrokeColor?: string;
   Icon?: IconType | LucideIcon;
+  width?: number; // Added to props interface
+  height?: number; // Added to props interface
 }
 
 const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
@@ -61,74 +64,62 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
   fontFamily = 'Arial, sans-serif',
   customStrokeColor,
   Icon,
+  width, // Use provided width
+  height, // Use provided height
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const pathsRef = useRef<SVGPathElement[]>([]);
   const isInView = useInView(containerRef, {
-    once:
-      effect !== 'neonDraw' &&
-      effect !== 'fireDraw' &&
-      effect !== 'electricDraw' &&
-      effect !== 'inkDraw' &&
-      effect !== 'pulseDraw' &&
-      effect !== 'scribbleDraw' &&
-      effect !== 'waterDraw' &&
-      effect !== 'goldDraw' &&
-      effect !== 'vortexDraw' &&
-      effect !== 'frostDraw' &&
-      effect !== 'shadowDraw' &&
-      effect !== 'sandDraw' &&
-      effect !== 'smokeDraw' &&
-      effect !== 'waveDraw' &&
-      effect !== 'fadeDraw' &&
-      effect !== 'whiteNeonDraw' &&
-      effect !== 'customColorDraw' &&
-      effect !== 'borderDraw' &&
-      effect !== 'dashedBorderDraw' &&
-      effect !== 'pulseBorderDraw' &&
-      effect !== 'iconNeonDraw' &&
-      effect !== 'iconFireDraw' &&
-      effect !== 'iconCustomColorDraw',
+    once: false,
     amount: 0.5,
   });
 
   // Calculate SVG dimensions
   const fontSizePx = parseFloat(fontSize) || 48;
-  const svgWidth = type === 'text' ? text.length * fontSizePx * 0.7 : type === 'icon' ? 64 : 100; // Increased for icons
-  const svgHeight = type === 'text' ? fontSizePx * 1.5 : type === 'icon' ? 64 : 40; // Increased for icons
+  const defaultIconSize = 48; // Fallback size if width/height not provided
+  const svgWidth = type === 'text' ? text.length * fontSizePx * 0.7 : width || defaultIconSize;
+  const svgHeight = type === 'text' ? fontSizePx * 1.5 : height || defaultIconSize;
 
-  // Map icon effects to base effects for animation logic
+  // Map icon effects to base effects
   const baseEffect = effect.startsWith('icon')
     ? effect.replace('icon', '').toLowerCase() as
         | 'neonDraw'
         | 'fireDraw'
         | 'customColorDraw'
-    : effect as
-        | 'neonDraw'
-        | 'fireDraw'
-        | 'electricDraw'
-        | 'inkDraw'
-        | 'pulseDraw'
-        | 'scribbleDraw'
-        | 'waterDraw'
-        | 'goldDraw'
-        | 'vortexDraw'
-        | 'frostDraw'
-        | 'shadowDraw'
-        | 'sandDraw'
-        | 'smokeDraw'
-        | 'waveDraw'
-        | 'fadeDraw'
-        | 'whiteNeonDraw'
-        | 'customColorDraw'
-        | 'borderDraw'
-        | 'dashedBorderDraw'
-        | 'pulseBorderDraw';
+    : effect;
+
+  // Extract SVG paths and viewBox from icon component
+  const getIconSvg = () => {
+    if (!Icon) return { paths: [], viewBox: '0 0 24 24' };
+    try {
+      const iconSvg = renderToStaticMarkup(<Icon />);
+      const parsed = parse(iconSvg);
+      const svgNode = parsed.children.find((child: any) => child.tagName === 'svg') as any;
+      if (!svgNode) return { paths: [], viewBox: '0 0 24 24' };
+
+      const paths = svgNode.children
+        ?.filter((child: any) => child.tagName === 'path' && child.properties.d)
+        ?.map((path: any) => ({
+          d: path.properties.d,
+          fill: path.properties.fill || 'none',
+          stroke: path.properties.stroke || 'none',
+        })) || [];
+
+      const viewBox = svgNode.properties?.viewBox || '0 0 24 24';
+      return { paths, viewBox };
+    } catch (error) {
+      console.error('Error parsing icon SVG:', error);
+      return { paths: [], viewBox: '0 0 24 24' };
+    }
+  };
+
+  const { paths: iconPaths, viewBox } = getIconSvg();
 
   // GSAP animations
   useEffect(() => {
-    if (!isInView || !svgRef.current) {
-      console.log('GSAP skipped:', { isInView, svgRef: !!svgRef.current });
+    if (!isInView || !svgRef.current || (type === 'icon' && !pathsRef.current.length)) {
+      console.log('GSAP skipped:', { isInView, svgRef: !!svgRef.current, paths: pathsRef.current.length });
       return;
     }
 
@@ -179,26 +170,16 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
       }
     }
     // Handle icon animations
-    else if (type === 'icon' && Icon) {
-      // Create a temporary container to render the icon
-      const tempContainer = document.createElement('div');
-      document.body.appendChild(tempContainer);
-      const IconComponent = Icon as any;
-      const iconInstance = <IconComponent />;
-      // Note: Direct rendering of React components for DOM manipulation is tricky.
-      // Instead, we'll assume the icon renders an SVG with paths.
-
-      const paths = svgRef.current.querySelectorAll('path');
-      if (paths.length === 0) {
-        console.warn('No <path> elements found in icon SVG');
-      }
-
-      paths.forEach((path, i) => {
-        let length = path.getTotalLength();
-        if (length === 0) {
-          console.warn(`Path ${i} has zero length, using fallback length`);
-          length = 100; // Fallback length for zero-length paths
+    else if (type === 'icon' && pathsRef.current.length > 0) {
+      pathsRef.current.forEach((path, i) => {
+        let length: number;
+        try {
+          length = path.getTotalLength() || 100;
+        } catch (error) {
+          console.warn(`Path ${i} length calculation failed, using fallback`, error);
+          length = 100;
         }
+
         gsap.set(path, {
           strokeDasharray: length,
           strokeDashoffset: length,
@@ -210,7 +191,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
         gsap.to(path, {
           strokeDashoffset: 0,
           duration: duration === Infinity ? 2 : duration,
-          delay: delay + i * 0.1,
+          delay: delay + i * 0.2,
           ease: 'power2.inOut',
           repeat: duration === Infinity ? -1 : 0,
           yoyo: duration === Infinity,
@@ -221,11 +202,16 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
                 strokeWidth: 0,
                 fill: customStrokeColor || textColor,
               });
+            } else if (iconPaths[i]?.fill !== 'none') {
+              gsap.set(path, {
+                stroke: 'none',
+                strokeWidth: 0,
+                fill: iconPaths[i].fill || textColor,
+              });
             }
           },
         });
 
-        // Apply effect-specific animations
         if (baseEffect === 'neonDraw') {
           gsap.to(path, {
             filter: `drop-shadow(0 0 10px ${glowColor})`,
@@ -233,7 +219,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
             duration: 0.5,
             repeat: -1,
             yoyo: true,
-            delay: delay + i * 0.1,
+            delay: delay + i * 0.2,
           });
         } else if (baseEffect === 'fireDraw') {
           gsap.to(path, {
@@ -242,7 +228,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
             duration: 0.3,
             repeat: -1,
             yoyo: true,
-            delay: delay + i * 0.1,
+            delay: delay + i * 0.2,
           });
         } else if (baseEffect === 'pulseDraw') {
           gsap.to(path, {
@@ -255,20 +241,23 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
             duration: 0.6,
             repeat: -1,
             yoyo: true,
-            delay: delay + i * 0.1,
+            delay: delay + i * 0.2,
           });
         }
       });
-
-      // Clean up temporary container
-      document.body.removeChild(tempContainer);
     }
     // Handle text animations
     else if (type === 'text') {
       const textElements = svgRef.current.querySelectorAll('text');
       textElements.forEach((textEl, i) => {
         const length = 1000;
-        gsap.set(textEl, { strokeDasharray: length, strokeDashoffset: length });
+        gsap.set(textEl, {
+          strokeDasharray: length,
+          strokeDashoffset: length,
+          fill: 'none',
+          stroke: strokeColor,
+          strokeWidth: 2,
+        });
 
         gsap.to(textEl, {
           strokeDashoffset: 0,
@@ -288,11 +277,10 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
           },
         });
 
-        // Effect-specific animations for text
         if (baseEffect === 'neonDraw') {
           gsap.to(textEl, {
             filter: `drop-shadow(0 0 10px ${glowColor})`,
-            opacity: 1,
+            stroke: strokeColor,
             duration: 0.5,
             repeat: -1,
             yoyo: true,
@@ -461,7 +449,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
     strokeColor,
     customStrokeColor,
     textColor,
-    Icon,
+    iconPaths,
   ]);
 
   const prefersReducedMotion =
@@ -469,7 +457,6 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {
-    console.log('Fallback triggered: prefersReducedMotion');
     return (
       <div
         className={`inline-block font-semibold ${textColor} ${fontSize} ${className}`}
@@ -479,6 +466,12 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
       </div>
     );
   }
+
+  // Calculate transform to center and scale icon
+  const [vbX, vbY, vbWidth, vbHeight] = viewBox.split(' ').map(Number);
+  const iconScale = Math.min(svgWidth, svgHeight) / Math.max(vbWidth, vbHeight); // Use svgWidth/svgHeight
+  const translateX = (svgWidth - vbWidth * iconScale) / 2 - vbX * iconScale;
+  const translateY = (svgHeight - vbHeight * iconScale) / 2 - vbY * iconScale;
 
   return (
     <motion.div
@@ -490,8 +483,9 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
         ref={svgRef}
         width={svgWidth}
         height={svgHeight}
-        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+        viewBox={type === 'icon' ? viewBox : `0 0 ${svgWidth} ${svgHeight}`}
         style={{ overflow: 'visible' }}
+        className={className} // Apply className to SVG for CSS sizing
       >
         <defs>
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -585,7 +579,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
           </filter>
           <filter id="wave" x="-50%" y="-50%" width="200%" height="200%">
             <feTurbulence
-              type="sinusoidal"
+              type="turbulence"
               baseFrequency="0.05"
               numOctaves="2"
               result="wave"
@@ -603,22 +597,9 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
               fill={
                 baseEffect === 'customColorDraw'
                   ? customStrokeColor || textColor
-                  : baseEffect === 'neonDraw' ||
-                    baseEffect === 'fireDraw' ||
-                    baseEffect === 'electricDraw' ||
-                    baseEffect === 'inkDraw' ||
-                    baseEffect === 'pulseDraw' ||
-                    baseEffect === 'scribbleDraw' ||
-                    baseEffect === 'waterDraw' ||
-                    baseEffect === 'goldDraw' ||
-                    baseEffect === 'vortexDraw' ||
-                    baseEffect === 'frostDraw' ||
-                    baseEffect === 'shadowDraw' ||
-                    baseEffect === 'sandDraw' ||
-                    baseEffect === 'smokeDraw' ||
-                    baseEffect === 'waveDraw' ||
-                    baseEffect === 'fadeDraw' ||
-                    baseEffect === 'whiteNeonDraw'
+                  : ['neonDraw', 'fireDraw', 'electricDraw', 'inkDraw', 'pulseDraw'].includes(
+                      baseEffect,
+                    )
                   ? 'none'
                   : textColor
               }
@@ -660,17 +641,7 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
                   : 'none'
               }
               strokeWidth={
-                baseEffect === 'customColorDraw'
-                  ? 2
-                  : baseEffect === 'neonDraw'
-                  ? 2
-                  : baseEffect === 'fireDraw'
-                  ? 2.5
-                  : baseEffect === 'electricDraw'
-                  ? 1.5
-                  : baseEffect === 'inkDraw'
-                  ? 3
-                  : baseEffect === 'pulseDraw'
+                ['neonDraw', 'fireDraw', 'electricDraw', 'inkDraw', 'pulseDraw'].includes(baseEffect)
                   ? 2
                   : baseEffect === 'scribbleDraw'
                   ? 2.5
@@ -697,25 +668,9 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
                   : 0
               }
               strokeDasharray={
-                baseEffect !== 'neonDraw' &&
-                baseEffect !== 'fireDraw' &&
-                baseEffect !== 'electricDraw' &&
-                baseEffect !== 'inkDraw' &&
-                baseEffect !== 'pulseDraw' &&
-                baseEffect !== 'scribbleDraw' &&
-                baseEffect !== 'waterDraw' &&
-                baseEffect !== 'goldDraw' &&
-                baseEffect !== 'vortexDraw' &&
-                baseEffect !== 'frostDraw' &&
-                baseEffect !== 'shadowDraw' &&
-                baseEffect !== 'sandDraw' &&
-                baseEffect !== 'smokeDraw' &&
-                baseEffect !== 'waveDraw' &&
-                baseEffect !== 'fadeDraw' &&
-                baseEffect !== 'whiteNeonDraw' &&
-                baseEffect !== 'customColorDraw'
-                  ? '0'
-                  : '1000'
+                ['neonDraw', 'fireDraw', 'electricDraw', 'inkDraw', 'pulseDraw'].includes(baseEffect)
+                  ? '1000'
+                  : '0'
               }
               fontSize={fontSizePx}
               fontFamily={fontFamily}
@@ -734,18 +689,22 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
               y="1"
               fill="none"
               stroke={strokeColor}
-              strokeWidth={baseEffect === 'pulseBorderDraw' ? 2 : 2}
+              strokeWidth={baseEffect === 'pulseBorderDraw' ? 2 : 1}
               filter={getFilter(baseEffect)}
             />
           )}
-          {type === 'icon' && Icon && (
+          {type === 'icon' && (
             <g
-              transform={`translate(${svgWidth / 2 - 32}, ${svgHeight / 2 - 32}) scale(2.5)`}
-              fill="none"
-              stroke={strokeColor}
-              strokeWidth="2"
+              transform={`translate(${translateX}, ${translateY}) scale(${iconScale})`}
+              ref={(e) => {
+                if (e) {
+                  pathsRef.current = Array.from(e.querySelectorAll('path'));
+                }
+              }}
             >
-              <Icon />
+              {iconPaths.map((path: { d: string; fill: string; stroke: string }, i: number) => (
+                <path key={i} d={path.d} fill="none" stroke={strokeColor} strokeWidth="2" />
+              ))}
             </g>
           )}
         </motion.g>
@@ -754,33 +713,10 @@ const AnimatedSVG: React.FC<AnimatedSVGProps> = ({
   );
 };
 
-const getFilter = (
-  effect:
-    | 'neonDraw'
-    | 'fireDraw'
-    | 'electricDraw'
-    | 'inkDraw'
-    | 'pulseDraw'
-    | 'scribbleDraw'
-    | 'waterDraw'
-    | 'goldDraw'
-    | 'vortexDraw'
-    | 'frostDraw'
-    | 'shadowDraw'
-    | 'sandDraw'
-    | 'smokeDraw'
-    | 'waveDraw'
-    | 'fadeDraw'
-    | 'whiteNeonDraw'
-    | 'customColorDraw'
-    | 'borderDraw'
-    | 'dashedBorderDraw'
-    | 'pulseBorderDraw',
-) => {
+const getFilter = (effect: string) => {
   switch (effect) {
     case 'neonDraw':
     case 'pulseDraw':
-    case 'goldDraw':
     case 'borderDraw':
     case 'pulseBorderDraw':
       return 'url(#glow)';
@@ -794,12 +730,16 @@ const getFilter = (
       return 'url(#scribble)';
     case 'waterDraw':
       return 'url(#ripple)';
+    case 'goldDraw':
+      return 'url(#glow)';
     case 'vortexDraw':
       return 'url(#vortex)';
     case 'frostDraw':
       return 'url(#glow)';
     case 'shadowDraw':
       return 'url(#shadow)';
+    case 'sandDraw':
+      return 'url(#glow)';
     case 'smokeDraw':
       return 'url(#smoke)';
     case 'waveDraw':

@@ -1,288 +1,292 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
+import AnimatedScroll from '@/app/components/animations/AnimatedScroll';
 import AnimatedText from '@/app/components/animations/AnimatedText';
 import Header from '@/app/components/Header';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import Lenis from '@studio-freight/lenis';
+import Footer from '@/app/components/Footer';
 import Link from 'next/link';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import Lenis from '@studio-freight/lenis';
 
-const TextAnimations: React.FC = () => {
-  const [inputText, setTextInput] = useState('Type your text');
-  const [selectedTextEffect, setTextEffect] = useState<
-    | 'fade'
-    | 'slide'
-    | 'neon'
-    | 'glitch'
-    | 'wave'
-    | 'flip'
-    | 'pulse'
-    | 'burst'
-    | 'sparkle'
-    | 'vaporwave'
-    | 'hologram'
-    | 'ripple'
-    | 'pixelate'
-    | 'quantum'
-    | 'blur'
-    | 'vortex'
-    | 'echo'
-    | 'chromaticAberration'
-    | 'distort'
-    | 'bounce'
-    | 'glowPulse'
-    | 'dataStream'
-    | 'holoWave'
-    | 'neonCircuit'
-  >('fade');
+const Text: React.FC = () => {
+ // Initialize Lenis for smooth scrolling
+ useEffect(() => {
+ const lenis = new Lenis({
+ duration: 1.2,
+ easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+ });
 
-  interface AnimationConfig {
-    effect:
-      | 'fade'
-      | 'slide'
-      | 'neon'
-      | 'glitch'
-      | 'wave'
-      | 'flip'
-      | 'pulse'
-      | 'burst'
-      | 'sparkle'
-      | 'vaporwave'
-      | 'hologram'
-      | 'ripple'
-      | 'pixelate'
-      | 'quantum'
-      | 'blur'
-      | 'vortex'
-      | 'echo'
-      | 'chromaticAberration'
-      | 'distort'
-      | 'bounce'
-      | 'glowPulse'
-      | 'dataStream'
-      | 'holoWave'
-      | 'neonCircuit';
-    text: string;
-    description: string;
-    color: string;
-  }
+ function raf(time: number) {
+ lenis.raf(time);
+ requestAnimationFrame(raf);
+ }
+ requestAnimationFrame(raf);
 
-  const animations: AnimationConfig[] = [
-    { effect: 'fade', text: 'Fade Animation', description: 'Smoothly fade in your text.', color: 'text-pink-500' },
-    { effect: 'slide', text: 'Slide Animation', description: 'Slide text into view elegantly.', color: 'text-pink-500' },
-    { effect: 'neon', text: 'Neon Glow Animation', description: 'Pulsing glow with a futuristic vibe.', color: 'text-pink-500' },
-    { effect: 'glitch', text: 'Glitch Effect', description: 'Cyberpunk-style distortion.', color: 'text-pink-500' },
-    { effect: 'wave', text: 'Wave Animation', description: 'Characters wave fluidly.', color: 'text-pink-500' },
-    { effect: 'flip', text: 'Flip Animation', description: '3D-like character flips.', color: 'text-pink-500' },
-    { effect: 'pulse', text: 'Pulse Effect', description: 'Continuous scaling for attention.', color: 'text-pink-500' },
-    { effect: 'burst', text: 'Burst Effect', description: 'Explosive character scatter.', color: 'text-pink-500' },
-    { effect: 'sparkle', text: 'Sparkle Effect', description: 'Dazzling, sparkling characters.', color: 'text-pink-500' },
-    { effect: 'vaporwave', text: 'Vaporwave Vibe', description: 'Retro-futuristic color cycling.', color: 'text-pink-500' },
-    { effect: 'hologram', text: 'Hologram Effect', description: 'Sci-fi flickering hologram.', color: 'text-pink-500' },
-    { effect: 'ripple', text: 'Ripple Animation', description: 'Characters pulse like water ripples.', color: 'text-pink-500' },
-    { effect: 'pixelate', text: 'Pixelate Effect', description: 'Text breaks into pixels and reforms.', color: 'text-pink-500' },
-    { effect: 'quantum', text: 'Quantum Effect', description: 'Characters teleport randomly.', color: 'text-pink-500' },
-    { effect: 'blur', text: 'Blur Animation', description: 'Dreamy blur fade-in effect.', color: 'text-pink-500' },
-    { effect: 'vortex', text: 'Vortex Animation', description: 'Characters swirl in like a portal.', color: 'text-pink-500' },
-    { effect: 'echo', text: 'Echo Effect', description: 'Trailing, fading character duplicates.', color: 'text-pink-500' },
-    {
-      effect: 'chromaticAberration',
-      text: 'Chromatic Aberration',
-      description: 'RGB split for a lens effect.',
-      color: 'text-pink-500',
-    },
-    { effect: 'distort', text: 'Distort Animation', description: 'Warped, wavy text effect.', color: 'text-pink-500' },
-    { effect: 'bounce', text: 'Bounce Animation', description: 'Springy character bounce.', color: 'text-pink-500' },
-    { effect: 'glowPulse', text: 'Glow Pulse', description: 'Subtle pulsing glow effect.', color: 'text-pink-500' },
-    { effect: 'dataStream', text: 'Data Stream', description: 'Text streams in like digital data bits.', color: 'text-pink-500' },
-    { effect: 'holoWave', text: 'Holo Wave', description: 'Holographic wave with 3D depth.', color: 'text-pink-500' },
-    { effect: 'neonCircuit', text: 'Neon Circuit', description: 'Circuit-like glowing traces.', color: 'text-pink-500' },
-  ];
+ return () => lenis.destroy();
+ }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value || 'Type your text');
-  };
+ // Scroll-based slide-up effect
+ const { scrollYProgress } = useScroll();
+ const yRange = useTransform(scrollYProgress, [0, 0.2], [50, 0]);
+ const opacityRange = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
-  const handleEffectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTextEffect(e.target.value as typeof selectedTextEffect);
-  };
+ interface TextDemo {
+ title: string;
+ description: string;
+ effect: 'wave' | 'flip' | 'ripple' | 'holoWave' | 'vaporwave' | 'neonCircuit';
+ }
 
-  // Initialize Lenis for smooth scrolling
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
+ const textDemos: TextDemo[] = [
+ {
+ title: 'Wave',
+ description: 'Smooth, flowing wave effect for dynamic text animations.',
+ effect: 'wave',
+ },
+ {
+ title: 'Flip',
+ description: 'Flipping text effect for engaging, 3D-like transitions.',
+ effect: 'flip',
+ },
+ {
+ title: 'Ripple',
+ description: 'Rippling scale effect for subtle, water-like text motion.',
+ effect: 'ripple',
+ },
+ {
+ title: 'Holo Wave',
+ description: 'Holographic wave with glowing depth for futuristic text.',
+ effect: 'holoWave',
+ },
+ {
+ title: 'Vaporwave',
+ description: 'Retro-futuristic color-shifting effect with pink and cyan tones.',
+ effect: 'vaporwave',
+ },
+ {
+ title: 'Neon Circuit',
+ description: 'Pulsing neon circuit effect for tech-inspired text animations.',
+ effect: 'neonCircuit',
+ },
+ ];
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+ const gradientBackground = {
+ backgroundImage: `
+ linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+ linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+ linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+ linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+ linear-gradient(-135deg, rgba(255,255,255,0.02) 1px, transparent 1px)
+ `,
+ backgroundSize: '15px 15px',
+ };
 
-    return () => lenis.destroy();
-  }, []);
+ // State for Try It Out section
+ const [textTryText, setTextTryText] = useState('Text Animations');
+ const [selectedEffect, setSelectedEffect] = useState<
+ 'wave' | 'flip' | 'ripple' | 'holoWave' | 'vaporwave' | 'neonCircuit'
+ >('wave');
 
-  // Scroll-based slide-up effect
-  const { scrollYProgress } = useScroll();
-  const yRange = useTransform(scrollYProgress, [0, 0.2], [50, 0]);
-  const opacityRange = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+ const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+ setTextTryText(e.target.value || 'Text Animations');
+ };
 
-  return (
-    <div
-      className="min-h-screen bg-[#1A1A1A] text-white font-sans relative"
-      style={{
-        backgroundImage: `
-          linear-gradient(45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-45deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-135deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(30deg, rgba(255,255,255,0.02) 1px, transparent 1px),
-          linear-gradient(-30deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-        `,
-        backgroundSize: '15px 15px',
-      }}
-    >
-      {/* Header */}
-      <Header />
+ const handleEffectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+ setSelectedEffect(e.target.value as typeof selectedEffect);
+ };
 
-      {/* Hero Section */}
-      <section className="py-24 px-6 max-w-7xl mx-auto text-center border-b border-gray-700">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-          <AnimatedText
-            effect="wave"
-            duration={Infinity}
-            textColor="text-white"
-            className="text-4xl md:text-5xl font-bold tracking-tight"
-          >
-            Text Animations
-          </AnimatedText>
-        </h1>
-        <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-8">
-          Elevate your UI with 24 lightweight, TypeScript-friendly text animations, powered by Framer Motion. Craft dynamic, professional effects directly in your React components.
-        </p>
-        <Link
-          href="#try-it-out"
-          className="inline-block bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition-colors duration-200 text-lg font-medium"
-        >
-          Explore Animations
-        </Link>
-      </section>
+ return (
+ <div className="min-h-screen bg-[#1A1A1A] text-white font-sans">
+ {/* Header */}
+ <Header />
 
-      {/* Interactive Input Section */}
-      <section id="try-it-out" className="py-16 px-6 max-w-7xl mx-auto border-b border-gray-700">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-8 tracking-tight"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          Try It Out
-        </motion.h2>
-        <motion.div
-          className="flex flex-col md:flex-row gap-4 justify-center items-center mb-12"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          <input
-            type="text"
-            value={inputText === 'Type your text' ? '' : inputText}
-            onChange={handleInputChange}
-            placeholder="Type your text"
-            className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-96"
-          />
-          <select
-            value={selectedTextEffect}
-            onChange={handleEffectChange}
-            className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-64"
-          >
-            {animations.map(({ effect, text }) => (
-              <option key={effect} value={effect} className="bg-gray-900 text-white">
-                {text}
-              </option>
-            ))}
-          </select>
-        </motion.div>
-        <motion.div
-          className="p-8 rounded-2xl bg-gray-800 border border-gray-700 min-h-[20vh] flex items-center justify-center"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          <AnimatedText
-            effect={selectedTextEffect}
-            duration={
-              ['pulse', 'neon', 'vaporwave', 'ripple', 'sparkle', 'glowPulse', 'dataStream', 'holoWave', 'neonCircuit'].includes(
-                selectedTextEffect
-              )
-                ? Infinity
-                : 2
-            }
-            textColor="text-pink-500"
-            className="text-2xl md:text-3xl font-bold tracking-tight"
-          >
-            {inputText}
-          </AnimatedText>
-        </motion.div>
-      </section>
+ {/* Hero Section */}
+ <section className="py-16 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
+ <AnimatedScroll effect="slideInLeft" triggerPoint={0.1} duration={1000} className="flex flex-col items-center">
+ <AnimatedText
+ effect="neonCircuit"
+ duration={Infinity}
+ textColor="#ffffff"
+ fontSize="text-4xl md:text-5xl"
+ glowColor="rgba(255, 106, 193, 0.7)"
+ className="font-bold tracking-tight"
+ >
+ Text Animations
+ </AnimatedText>
+ <hr className="border-gray-700 my-6 max-w-md mx-auto" />
+ <motion.p
+ className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
+ style={{ y: yRange, opacity: opacityRange }}
+ >
+ Elevate your Next.js projects with dynamic text animations using the React Animations library. From flowing waves to neon circuit effects, explore a range of captivating text effects. Install via `npm install react-animations` and preview the effects below or try them out interactively.
+ </motion.p>
+ <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+ <div className="flex flex-col sm:flex-row justify-center gap-4">
+ <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+ <Link
+ href="/docs"
+ className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+ aria-label="Get Started with Documentation"
+ >
+ Get Started
+ </Link>
+ </motion.div>
+ </div>
+ </AnimatedScroll>
+ </section>
 
-      {/* Animation Showcase */}
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 tracking-tight"
-          style={{ y: yRange, opacity: opacityRange }}
-        >
-          Animation Showcase
-        </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {animations.map(({ effect, text, description, color }, index) => (
-            <motion.div
-              key={effect}
-              className={`p-6 rounded-lg bg-gray-800 border border-gray-700 ${
-                index % 4 !== 3 ? 'lg:border-r-0' : ''
-              } ${index < animations.length - (animations.length % 4 || 4) ? 'border-b-0 sm:border-b' : ''}`}
-              style={{ y: yRange, opacity: opacityRange }}
-            >
-              <AnimatedText
-                effect={effect}
-                duration={
-                  ['pulse', 'neon', 'vaporwave', 'ripple', 'sparkle', 'glowPulse', 'dataStream', 'holoWave', 'neonCircuit'].includes(
-                    effect
-                  )
-                    ? Infinity
-                    : 2
-                }
-                textColor={color}
-                className="text-xl font-semibold mb-4 tracking-tight"
-              >
-                {text}
-              </AnimatedText>
-              <p className="text-gray-400 text-sm">{description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+ {/* Text Animation Showcase */}
+ <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>
+ <AnimatedScroll effect="slideInRight" triggerPoint={0.2} duration={1000} className="text-center">
+ <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for text showcase scroll">
+ effect="slideInRight" triggerPoint={0.2} duration={1000}
+ </span>
+ <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+ Text Animation Showcase
+ </h2>
+ <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+ Discover the `AnimatedText` component with effects like wave, flip, and neon circuit. These animations are perfect for headings, banners, and interactive UI elements in your Next.js projects.
+ </p>
+ <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+ </AnimatedScroll>
+ <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+ {textDemos.map(({ title, description, effect }, index) => (
+ <AnimatedScroll
+ key={title}
+ effect={index % 2 === 0 ? 'slideInLeft' : 'slideInRight'}
+ triggerPoint={0.2 + index * 0.1}
+ duration={1000}
+ className={`py-4 flex flex-col items-center text-center ${
+ index < textDemos.length - 1 ? 'md:border-r md:border-gray-700' : ''
+ } ${index === 0 ? 'border-t md:border-t-0 pt-6 md:pt-4' : ''}`}
+ >
+ <AnimatedText
+ effect={effect}
+ duration={1.5}
+ textColor="#ffffff"
+ fontSize="text-xl"
+ glowColor={
+ effect === 'vaporwave'
+ ? 'rgba(255, 106, 193, 0.7)'
+ : effect === 'neonCircuit' || effect === 'holoWave'
+ ? 'rgba(255, 106, 193, 0.7)'
+ : 'rgba(255, 255, 255, 0.7)'
+ }
+ className="font-semibold mb-2"
+ >
+ {title}
+ </AnimatedText>
+ <hr className="border-gray-700 my-2 max-w-xs mx-auto" />
+ <p className="text-gray-400 text-sm max-w-xs">{description}</p>
+ <hr className="border-gray-700 my-2 max-w-xs mx-auto" />
+ </AnimatedScroll>
+ ))}
+ </div>
+ </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 text-center text-gray-400 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center gap-6 mb-4">
-            <Link href="/docs" className="hover:text-pink-500 transition-colors duration-200">
-              Docs
-            </Link>
-            <Link href="/animations" className="hover:text-pink-500 transition-colors duration-200">
-              Showcase
-            </Link>
-            <Link
-              href="https://github.com/your-repo/react-lab"
-              className="hover:text-pink-500 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </Link>
-          </div>
-          <p>Copyright © 2025 React Lab. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-  );
+ {/* Try It Out Section */}
+ <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>
+ <AnimatedScroll effect="slideInLeft" triggerPoint={0.3} duration={1000} className="text-center">
+ <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for text tryout scroll">
+ effect="slideInLeft" triggerPoint={0.3} duration={1000}
+ </span>
+ <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+ Try Text Animations
+ </h2>
+ <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+ Experiment with text animations by entering your own text and selecting an effect to preview in real-time.
+ </p>
+ <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+ <motion.div className="flex flex-col md:flex-row gap-6 justify-center mb-8" style={{ y: yRange, opacity: opacityRange }}>
+ <input
+ type="text"
+ value={textTryText === 'Text Animations' ? '' : textTryText}
+ onChange={handleTextChange}
+ placeholder="Enter your text"
+ className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-96"
+ />
+ <select
+ value={selectedEffect}
+ onChange={handleEffectChange}
+ className="px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 outline-none text-lg w-full md:w-64"
+ >
+ {['wave', 'flip', 'ripple', 'holoWave', 'vaporwave', 'neonCircuit'].map((effect) => (
+ <option key={effect} value={effect} className="bg-gray-900 text-white">
+ {effect
+ .replace(/([A-Z])/g, ' $1')
+ .trim()
+ .replace(/^./, (str) => str.toUpperCase())}
+ </option>
+ ))}
+ </select>
+ </motion.div>
+ <motion.div
+ className="p-6 rounded-2xl bg-gray-800 border border-gray-700 flex items-center justify-center"
+ style={{ y: yRange, opacity: opacityRange }}
+ >
+ <AnimatedText
+ effect={selectedEffect}
+ duration={Infinity}
+ textColor="#ffffff"
+ fontSize="text-2xl md:text-3xl"
+ glowColor={
+ selectedEffect === 'vaporwave'
+ ? 'rgba(255, 106, 193, 0.7)'
+ : selectedEffect === 'neonCircuit' || selectedEffect === 'holoWave'
+ ? 'rgba(255, 106, 193, 0.7)'
+ : 'rgba(255, 255, 255, 0.7)'
+ }
+ className="font-bold tracking-tight"
+ >
+ {textTryText}
+ </AnimatedText>
+ </motion.div>
+ </AnimatedScroll>
+ </section>
+
+ {/* CTA Section */}
+ <section className="py-12 px-6 max-w-7xl mx-auto border-b border-gray-700">
+ <AnimatedScroll effect="slideInLeft" triggerPoint={0.4} duration={1000} className="text-center">
+ <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for CTA scroll">
+ effect="slideInLeft" triggerPoint={0.4} duration={1000}
+ </span>
+ <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+ Start Animating Text
+ </h2>
+ <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+ Bring your Next.js projects to life with stunning text animations using `react-animations`. Install via `npm install react-animations` to access our lightweight, TypeScript-friendly library. Check out our documentation or join our community to collaborate and learn.
+ </p>
+ <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
+ <div className="flex flex-col sm:flex-row justify-center gap-4">
+ <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+ <Link
+ href="/docs"
+ className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+ aria-label="Get Started with Docs"
+ >
+ Get Started
+ </Link>
+ </motion.div>
+ <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+ <Link
+ href="https://github.com/your-repo/react-animations"
+ className="inline-block px-8 py-3 rounded-full font-semibold text-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors duration-300"
+ aria-label="Contribute on GitHub"
+ target="_blank"
+ rel="noopener noreferrer"
+ >
+ Contribute
+ </Link>
+ </motion.div>
+ </div>
+ </AnimatedScroll>
+ </section>
+
+ {/* Footer */}
+ <Footer />
+ </div>
+ );
 };
 
-export default TextAnimations;
+export default Text;
