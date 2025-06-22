@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     },
     { href: '/docs', label: 'Docs' },
     { href: '/examples', label: 'Examples' },
-    { href: 'https://github.com/your-repo/react-lab', label: 'GitHub', external: true },
+    { href: '/playground', label: 'Play' },
   ];
 
   // Sub-menu animation variants
@@ -87,7 +87,7 @@ const Header: React.FC = () => {
             textColor="#ffffff"
             strokeColor="#ff6ac1"
             glowColor="rgba(255, 106, 193, 0.7)"
-            fontSize="24px" // Matches text-2xl
+            fontSize="24px"
             fontFamily="Inter, Arial, sans-serif"
             className="font-bold hover:text-purple-500 transition-colors duration-300 tracking-tight"
           />
@@ -104,9 +104,11 @@ const Header: React.FC = () => {
             >
               <Link
                 href={link.href}
-                className="flex items-center text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 text-lg"
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
+                className={`flex items-center transition-colors duration-200 text-lg ${
+                  link.label === 'Play'
+                    ? 'play-link'
+                    : 'text-gray-400 hover:text-pink-500 focus:text-pink-500'
+                }`}
                 aria-haspopup={!!link.subLinks}
                 aria-expanded={link.subLinks ? isAnimationsOpen : undefined}
               >
@@ -211,10 +213,12 @@ const Header: React.FC = () => {
                 ) : (
                   <Link
                     href={link.href}
-                    className="text-lg text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200"
+                    className={`text-lg transition-colors duration-200 ${
+                      link.label === 'Play'
+                        ? 'play-link'
+                        : 'text-gray-400 hover:text-pink-500 focus:text-pink-500'
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
-                    target={link.external ? '_blank' : undefined}
-                    rel={link.external ? 'noopener noreferrer' : undefined}
                   >
                     {link.label}
                   </Link>
