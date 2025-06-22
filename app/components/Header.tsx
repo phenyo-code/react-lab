@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 import Link from 'next/link';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
-import { useEffect } from 'react';
+import AnimatedSVG from '@/app/components/animations/AnimatedSVG';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,12 +78,19 @@ const Header: React.FC = () => {
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="text-2xl font-bold text-pink-500 hover:text-purple-500 transition-colors duration-300 tracking-tight"
-        >
-          ReAnime
+        {/* Logo with AnimatedSVG */}
+        <Link href="/" className="flex items-center">
+          <AnimatedSVG
+            text="ReAnime"
+            effect="neonDraw"
+            duration={Infinity}
+            textColor="#ffffff"
+            strokeColor="#ff6ac1"
+            glowColor="rgba(255, 106, 193, 0.7)"
+            fontSize="24px" // Matches text-2xl
+            fontFamily="Inter, Arial, sans-serif"
+            className="font-bold hover:text-purple-500 transition-colors duration-300 tracking-tight"
+          />
         </Link>
 
         {/* Desktop Nav */}

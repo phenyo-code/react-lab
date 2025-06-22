@@ -904,7 +904,7 @@ const Examples: React.FC = () => {
               </p>
               <pre className="bg-gray-900/80 p-4 rounded-lg text-gray-400 font-mono text-sm overflow-x-auto">
                 <code>
-                  <span style={{ color: '#f472b6' }}>import</span>{' '}
+                  <span style={{ color: '#f472b6' }}>import</span>{' '} 
                   <span style={{ color: '#a3bffa' }}>AnimatedText</span>{' '}
                   <span style={{ color: '#f472b6' }}>from</span>{' '}
                   <span style={{ color: '#a3e4a7' }}>'@/app/components/animations/AnimatedText'</span>;
