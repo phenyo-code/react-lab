@@ -29,3 +29,65 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.play-link {
+  position: relative;
+  padding: 8px 16px; /* Padding for space around text */
+  color: #ff6ac1; /* Pink text */
+  transition: color 0.2s ease;
+  display: inline-block; /* Ensure background and SVG are positioned correctly */
+}
+
+/* Pink gradient background */
+.play-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 106, 193, 0.2); /* Semi-transparent pink base */
+  background-image: 
+    linear-gradient(45deg, rgba(255, 106, 193, 0.02) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 106, 193, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 106, 193, 0.02) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 106, 193, 0.02) 1px, transparent 1px),
+    linear-gradient(-135deg, rgba(255, 106, 193, 0.02) 1px, transparent 1px);
+  background-size: 15px 15px; /* Grid size for pattern */
+  z-index: -1;
+  box-shadow: 0 0 8px rgba(255, 106, 193, 0.5); /* Subtle glow */
+}
+
+/* SVG border container */
+.play-link svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: visible; /* Ensure SVG border is not clipped */
+}
+
+/* Ensure text is above SVG and background */
+.play-link span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover effect */
+.play-link:hover {
+  color: #ff8ad1; /* Lighter pink text on hover */
+}
+.play-link:hover::before {
+  background: rgba(255, 106, 193, 0.3); /* Slightly more opaque base */
+  background-image: 
+    linear-gradient(45deg, rgba(255, 106, 193, 0.03) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 106, 193, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 106, 193, 0.03) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 106, 193, 0.03) 1px, transparent 1px),
+    linear-gradient(-135deg, rgba(255, 106, 193, 0.03) 1px, transparent 1px); /* Slightly more opaque lines */
+}
+.play-link:hover rect {
+  stroke: #ff8ad1; /* Lighter pink border on hover */
+}

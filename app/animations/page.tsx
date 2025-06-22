@@ -85,8 +85,8 @@ const Animations: React.FC = () => {
   // State for SVG Try It Out section
   const [svgText, setSvgText] = useState('ReactLab SVG');
   const [selectedSvgEffect, setSvgEffect] = useState<
-    'neonDraw' | 'fireDraw' | 'electricDraw' | 'inkDraw' | 'pulseDraw' | 'scribbleDraw' | 'waterDraw' | 'goldDraw' | 'vortexDraw' | 'frostDraw' | 'shadowDraw' | 'sandDraw' | 'smokeDraw' | 'waveDraw' | 'fadeDraw'
-  >('neonDraw');
+    'textNeonDraw' | 'fireDraw' | 'electricDraw' | 'inkDraw' | 'pulseDraw' | 'scribbleDraw' | 'waterDraw' | 'goldDraw' | 'vortexDraw' | 'frostDraw' | 'shadowDraw' | 'sandDraw' | 'smokeDraw' | 'waveDraw' | 'fadeDraw'
+  >('textNeonDraw');
 
   const handleSvgTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSvgText(e.target.value || 'ReactLab SVG');
@@ -195,12 +195,48 @@ const Animations: React.FC = () => {
         >
           <AnimatedSVG
             text={svgText}
-            effect={selectedSvgEffect}
+            effect={
+              ({
+                neonDraw: 'textNeonDraw',
+                fireDraw: 'textFireDraw',
+                electricDraw: 'textElectricDraw',
+                inkDraw: 'textInkDraw',
+                pulseDraw: 'textPulseDraw',
+                scribbleDraw: 'textScribbleDraw',
+                waterDraw: 'textWaterDraw',
+                goldDraw: 'textGoldDraw',
+                vortexDraw: 'textVortexDraw',
+                frostDraw: 'textFrostDraw',
+                shadowDraw: 'textShadowDraw',
+                sandDraw: 'textSandDraw',
+                smokeDraw: 'textSmokeDraw',
+                waveDraw: 'textWaveDraw',
+                fadeDraw: 'textFadeDraw',
+              } as Record<
+                string,
+                | 'textNeonDraw'
+                | 'textFireDraw'
+                | 'textElectricDraw'
+                | 'textInkDraw'
+                | 'textPulseDraw'
+                | 'textScribbleDraw'
+                | 'textWaterDraw'
+                | 'textGoldDraw'
+                | 'textVortexDraw'
+                | 'textFrostDraw'
+                | 'textShadowDraw'
+                | 'textSandDraw'
+                | 'textSmokeDraw'
+                | 'textWaveDraw'
+                | 'textFadeDraw'
+                | undefined
+              >)[selectedSvgEffect]
+            }
             duration={Infinity}
             textColor="#ffffff"
             strokeColor={
               {
-                neonDraw: '#ff6ac1',
+                textNeonDraw: '#ff6ac1',
                 fireDraw: '#ff4500',
                 electricDraw: '#00b7eb',
                 inkDraw: '#000000',

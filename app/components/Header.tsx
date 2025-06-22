@@ -1,15 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 import Link from 'next/link';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { motion, AnimatePresence, Variants, useInView } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 import AnimatedSVG from '@/app/components/animations/AnimatedSVG';
+import gsap from 'gsap';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAnimationsOpen, setIsAnimationsOpen] = useState(false);
+  const desktopPlayLinkRef = useRef<HTMLAnchorElement>(null) as React.RefObject<HTMLAnchorElement>;
+  const mobilePlayLinkRef = useRef<HTMLAnchorElement>(null);
+  const desktopSvgRef = useRef<SVGSVGElement>(null) as React.RefObject<SVGSVGElement>;
+  const mobileSvgRef = useRef<SVGSVGElement>(null) as React.RefObject<SVGSVGElement>;
+  const isDesktopInView = useInView(desktopPlayLinkRef, { once: false, amount: 0.5 });
+  const isMobileInView = useInView(mobilePlayLinkRef, { once: false, amount: 0.5 });
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -29,29 +36,9 @@ const Header: React.FC = () => {
 
   // Sub-menu animation variants
   const subMenuVariants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: -10,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.2,
-        ease: 'easeOut',
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: -10,
-      scale: 0.95,
-      transition: {
-        duration: 0.15,
-        ease: 'easeIn',
-      },
-    },
+    hidden: { opacity: 0, y: -10, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15, ease: 'easeIn' } },
   };
 
   // Initialize Lenis for smooth scrolling
@@ -69,6 +56,51 @@ const Header: React.FC = () => {
 
     return () => lenis.destroy();
   }, []);
+
+  // Set SVG dimensions and animate border
+  useEffect(() => {
+    const updateSvg = (
+      svgRef: React.RefObject<SVGSVGElement>,
+      linkRef: React.RefObject<HTMLElement>,
+      isInView: boolean
+    ) => {
+      if (!isInView || !svgRef.current || !linkRef.current) return;
+
+      const rect = svgRef.current.querySelector('rect');
+      if (!rect) return;
+
+      // Get link dimensions
+      const { width, height } = linkRef.current.getBoundingClientRect();
+      svgRef.current.setAttribute('width', `${width}`);
+      svgRef.current.setAttribute('height', `${height}`);
+      rect.setAttribute('width', `${width - 2}`); // Account for stroke width
+      rect.setAttribute('height', `${height - 2}`);
+
+      // Calculate perimeter for strokeDasharray
+      const perimeter = 2 * (width + height - 4); // Adjust for stroke width
+      gsap.set(rect, { strokeDasharray: perimeter, strokeDashoffset: perimeter });
+
+      // Draw-on animation
+      gsap.to(rect, {
+        strokeDashoffset: 0,
+        duration: 2,
+        ease: 'power2.inOut',
+        repeat: -1,
+        yoyo: true,
+      });
+
+      // Glow effect
+      gsap.to(rect, {
+        filter: 'url(#glow)',
+        duration: 0.5,
+        repeat: -1,
+        yoyo: true,
+      });
+    };
+
+    updateSvg(desktopSvgRef, desktopPlayLinkRef as React.RefObject<HTMLElement>, isDesktopInView);
+    updateSvg(mobileSvgRef, mobilePlayLinkRef as React.RefObject<HTMLElement>, isMobileInView);
+  }, [isDesktopInView, isMobileInView]);
 
   return (
     <motion.header
@@ -111,9 +143,36 @@ const Header: React.FC = () => {
                 }`}
                 aria-haspopup={!!link.subLinks}
                 aria-expanded={link.subLinks ? isAnimationsOpen : undefined}
+                ref={link.label === 'Play' ? desktopPlayLinkRef : null}
               >
-                {link.label}
-                {link.subLinks && <FiChevronDown className="ml-1" />}
+                {link.label === 'Play' ? (
+                  <>
+                    <svg ref={desktopSvgRef} preserveAspectRatio="none">
+                      <defs>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                          <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      <rect
+                        x="1"
+                        y="1"
+                        fill="none"
+                        stroke="#ff6ac1"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    <span>{link.label}</span>
+                  </>
+                ) : (
+                  <>
+                    {link.label}
+                    {link.subLinks && <FiChevronDown className="ml-1" />}
+                  </>
+                )}
               </Link>
               {link.subLinks && (
                 <AnimatePresence>
@@ -219,8 +278,33 @@ const Header: React.FC = () => {
                         : 'text-gray-400 hover:text-pink-500 focus:text-pink-500'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
+                    ref={link.label === 'Play' ? mobilePlayLinkRef : null}
                   >
-                    {link.label}
+                    {link.label === 'Play' ? (
+                      <>
+                        <svg ref={mobileSvgRef} preserveAspectRatio="none">
+                          <defs>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                              <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                              </feMerge>
+                            </filter>
+                          </defs>
+                          <rect
+                            x="1"
+                            y="1"
+                            fill="none"
+                            stroke="#ff6ac1"
+                            strokeWidth="2"
+                          />
+                        </svg>
+                        <span>{link.label}</span>
+                      </>
+                    ) : (
+                      link.label
+                    )}
                   </Link>
                 )}
               </div>
