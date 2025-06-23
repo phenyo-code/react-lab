@@ -115,12 +115,9 @@ const Text: React.FC = () => {
  Text Animations
  </AnimatedText>
  <hr className="border-gray-700 my-6 max-w-md mx-auto" />
- <motion.p
- className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
- style={{ y: yRange, opacity: opacityRange }}
- >
- Elevate your Next.js projects with dynamic text animations using the React Animations library. From flowing waves to neon circuit effects, explore a range of captivating text effects. Install via `npm install react-animations` and preview the effects below or try them out interactively.
- </motion.p>
+ <p className="text-base md:text-lg text-gray-100 max-w-xl mb-6">
+             Elevate your Next.js projects with dynamic text animations using the React Animations library.
+</p>
  <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
  <div className="flex flex-col sm:flex-row justify-center gap-4">
  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

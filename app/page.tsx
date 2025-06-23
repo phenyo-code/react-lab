@@ -169,7 +169,7 @@ const Home: React.FC = () => {
 
 
             {/* Hero Section */}
-      <section className="relative pt-24 px-4 sm:px-6 md:px-8 max-w-[100vw] mx-auto border-b border-gray-700 overflow-hidden">
+      <section className="relative pt-18 px-4 sm:px-6 md:px-8 max-w-[100vw] mx-auto border-b border-gray-700 overflow-hidden">
         <div className="relative w-full h-[80vh] max-w-7xl mx-auto">
           <div className="absolute inset-0 z-0">
             <Premium3D className="w-4 h-full" />
@@ -211,9 +211,7 @@ const Home: React.FC = () => {
       {/* Introduction Section */}
       <section className="py-16 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>
         <AnimatedScroll effect="slideInLeft" triggerPoint={0.15} duration={1000} className="text-center">
-          <span className="text-[15px] text-gray-700 block mt-1" aria-label="Animation properties for introduction scroll">
-            effect="slideInLeft" triggerPoint={0.15} duration={1000}
-          </span>
+          
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
             Why React Animations?
           </h2>

@@ -11,6 +11,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { Star } from 'lucide-react';
+import Triangles from '../components/animations/Triangles';
 
 const Animations: React.FC = () => {
   // Initialize Lenis for smooth scrolling
@@ -281,7 +282,10 @@ const Animations: React.FC = () => {
 
       {/* Hero Section */}
       <section className="py-24 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
-        <AnimatedScroll effect="slideInLeft" triggerPoint={0.1} duration={1000} className="flex flex-col items-center">
+        <div className="flex flex-col items-center">
+            <div className="absolute inset-0 z-0">
+                        <Triangles className="w-4 h-full" />
+                      </div>
           <AnimatedSVG
             text="Animations Showcase"
             effect="neonDraw"
@@ -296,12 +300,9 @@ const Animations: React.FC = () => {
             key="hero-neon"
           />
           <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
-          <motion.p
-            className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
-            style={{ y: yRange, opacity: opacityRange }}
-          >
-            Explore the full range of animations in the React Animations library. From dynamic text effects and smooth scroll transitions to stunning SVG draw-on animations, discover how to enhance your Next.js projects with `npm install react-animations`. Preview each effect below and try them out interactively to see how they fit your UI.
-          </motion.p>
+           <p className="text-base md:text-lg text-gray-100 max-w-xl mb-6">
+             Dynamic text effects, smooth scroll transitions & SVG draw-on animations, discover how to enhance your Next.js projects with `npm install react-animations`.
+</p>
           <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -314,7 +315,7 @@ const Animations: React.FC = () => {
               </Link>
             </motion.div>
           </div>
-        </AnimatedScroll>
+        </div>
       </section>
 
       {/* Text Animation Showcase */}

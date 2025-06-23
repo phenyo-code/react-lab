@@ -30,12 +30,12 @@ const Header: React.FC = () => {
         { href: "/animations/scroll", label: "Scroll", icon: Mouse },
         { href: "/animations/svg", label: "SVG", icon: PenTool },
         { href: "/animations/3d", label: "3D", icon: Box },
-        { href: "/animations/premium/3d", label: "Premium 3D", icon: Box },
+        { href: "/animations/premium/3d", label: "Premium", icon: Box },
         { href: "/animations/premium/robot", label: "Robot", icon: Bot },
       ],
     },
     { href: "/docs", label: "Docs" },
-    { href: "/examples", label: "Examples" },
+    { href: "/community", label: "Community" },
     { href: "/playground", label: "Play" },
   ];
 
@@ -179,7 +179,7 @@ const Header: React.FC = () => {
                 <AnimatePresence>
                   {isAnimationsOpen && (
                     <motion.ul
-                      className="absolute top-full left-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden"
+                      className="absolute top-full left-0 mt-2 w-64 bg-gray-800 border border-gray-700 rounded-lg overflow-hidden grid grid-cols-2 gap-0"
                       variants={subMenuVariants}
                       initial="hidden"
                       animate="visible"
@@ -188,11 +188,14 @@ const Header: React.FC = () => {
                       {link.subLinks.map((subLink, subIndex) => (
                         <li
                           key={subLink.href}
-                          className={subIndex < link.subLinks.length - 1 ? "border-b border-gray-700" : ""}
+                          className={`flex items-center px-2 py-2 ${
+                            subIndex < 3 ? "border-b border-gray-700" : ""} ${
+                            subIndex % 3 === 0 || subIndex % 3 === 1 ? "border-r border-gray-700" : ""
+                          }`}
                         >
                           <Link
                             href={subLink.href}
-                            className="flex items-center px-4 py-2 text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 text-base"
+                            className="flex items-center w-full text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 text-base"
                             onClick={() => setIsAnimationsOpen(false)}
                           >
                             {subLink.icon && (
@@ -204,9 +207,9 @@ const Header: React.FC = () => {
                                 glowColor="rgba(255, 106, 193, 0.7)"
                                 duration={Infinity}
                                 delay={0.0}
-                                className="w-6 h-6 mr-2 shrink-0"
-                                width={20}
-                                height={20}
+                                className="w-5 h-5 mr-2 shrink-0"
+                                width={16}
+                                height={16}
                               />
                             )}
                             <span>{subLink.label}</span>
@@ -257,7 +260,7 @@ const Header: React.FC = () => {
                     <AnimatePresence>
                       {isAnimationsOpen && (
                         <motion.ul
-                          className="pl-4 mt-2 space-y-2"
+                          className="pl-4 mt-2 grid grid-cols-2 gap-0"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
@@ -266,11 +269,14 @@ const Header: React.FC = () => {
                           {link.subLinks.map((subLink, subIndex) => (
                             <li
                               key={subLink.href}
-                              className={subIndex < link.subLinks.length - 1 ? "border-b border-gray-700 pb-2" : ""}
+                              className={`flex items-center py-1.5 ${
+                                subIndex < 3 ? "border-b border-gray-700" : ""} ${
+                                subIndex % 3 === 0 || subIndex % 3 === 1 ? "border-r border-gray-700" : ""
+                              }`}
                             >
                               <Link
                                 href={subLink.href}
-                                className="flex items-center text-base text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200"
+                                className="flex items-center text-base text-gray-400 hover:text-pink-500 focus:text-pink-500 transition-colors duration-200 w-full"
                                 onClick={() => {
                                   setIsMenuOpen(false);
                                   setIsAnimationsOpen(false);
@@ -286,8 +292,8 @@ const Header: React.FC = () => {
                                     duration={Infinity}
                                     delay={0.5}
                                     className="w-4 h-4 mr-2 shrink-0"
-                                    width={16}
-                                    height={16}
+                                    width={14}
+                                    height={14}
                                   />
                                 )}
                                 <span>{subLink.label}</span>
