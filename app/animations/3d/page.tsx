@@ -9,6 +9,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState } from 'react';
 import { Star } from 'lucide-react';
 
+
 const Animations3D: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const yRange = useTransform(scrollYProgress, [0, 0.2], [50, 0]);

@@ -11,6 +11,7 @@ import Lenis from '@studio-freight/lenis';
 import Footer from './components/Footer';
 import AnimatedSVG from './components/animations/AnimatedSVG';
 
+
 const Home: React.FC = () => {
   // Initialize Lenis for smooth scrolling
   useEffect(() => {
@@ -167,6 +168,7 @@ const Home: React.FC = () => {
 
       {/* Hero Section */}
       <section className="py-24 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
+
         <AnimatedScroll effect="slideInLeft" triggerPoint={0.1} duration={1000} className="flex flex-col items-center">
           <AnimatedSVG
             text="React Animations"

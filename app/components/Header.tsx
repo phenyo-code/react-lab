@@ -1,15 +1,14 @@
+/* src/app/components/Header.tsx */
+"use client";
 
-'use client';
-
-import { useState, useEffect, useRef } from 'react';
-import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
-import { Type, Mouse, PenTool, Box } from 'lucide-react';
-
-import Link from 'next/link';
-import { motion, AnimatePresence, Variants, useInView } from 'framer-motion';
-import Lenis from '@studio-freight/lenis';
-import AnimatedSVG from '@/app/components/animations/AnimatedSVG';
-import gsap from 'gsap';
+import { useState, useEffect, useRef } from "react";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { Type, Mouse, PenTool, Box, Bot } from "lucide-react";
+import Link from "next/link";
+import { motion, AnimatePresence, Variants, useInView } from "framer-motion";
+import Lenis from "@studio-freight/lenis";
+import AnimatedSVG from "@/app/components/animations/AnimatedSVG";
+import gsap from "gsap";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,27 +21,29 @@ const Header: React.FC = () => {
   const isMobileInView = useInView(mobilePlayLinkRef, { once: false, amount: 0.5 });
 
   const navLinks = [
-    { href: '/', label: 'Home' },
+    { href: "/", label: "Home" },
     {
-      href: '/animations',
-      label: 'Animations',
+      href: "/animations",
+      label: "Animations",
       subLinks: [
-        { href: '/animations/text', label: 'Text', icon: Type },
-        { href: '/animations/scroll', label: 'Scroll', icon: Mouse },
-        { href: '/animations/svg', label: 'SVG', icon: PenTool },
-        { href: '/animations/3d', label: '3D', icon: Box },
+        { href: "/animations/text", label: "Text", icon: Type },
+        { href: "/animations/scroll", label: "Scroll", icon: Mouse },
+        { href: "/animations/svg", label: "SVG", icon: PenTool },
+        { href: "/animations/3d", label: "3D", icon: Box },
+        { href: "/animations/premium/3d", label: "Premium 3D", icon: Box },
+        { href: "/animations/premium/robot", label: "Robot", icon: Bot },
       ],
     },
-    { href: '/docs', label: 'Docs' },
-    { href: '/examples', label: 'Examples' },
-    { href: '/playground', label: 'Play' },
+    { href: "/docs", label: "Docs" },
+    { href: "/examples", label: "Examples" },
+    { href: "/playground", label: "Play" },
   ];
 
   // Sub-menu animation variants
   const subMenuVariants: Variants = {
     hidden: { opacity: 0, y: -10, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: 'easeOut' } },
-    exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15, ease: 'easeIn' } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: "easeOut" } },
+    exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15, ease: "easeIn" } },
   };
 
   // Initialize Lenis for smooth scrolling
@@ -70,14 +71,14 @@ const Header: React.FC = () => {
     ) => {
       if (!isInView || !svgRef.current || !linkRef.current) return;
 
-      const rect = svgRef.current.querySelector('rect');
+      const rect = svgRef.current.querySelector("rect");
       if (!rect) return;
 
       const { width, height } = linkRef.current.getBoundingClientRect();
-      svgRef.current.setAttribute('width', `${width}`);
-      svgRef.current.setAttribute('height', `${height}`);
-      rect.setAttribute('width', `${width - 2}`);
-      rect.setAttribute('height', `${height - 2}`);
+      svgRef.current.setAttribute("width", `${width}`);
+      svgRef.current.setAttribute("height", `${height}`);
+      rect.setAttribute("width", `${width - 2}`);
+      rect.setAttribute("height", `${height - 2}`);
 
       const perimeter = 2 * (width + height - 4);
       gsap.set(rect, { strokeDasharray: perimeter, strokeDashoffset: perimeter });
@@ -85,13 +86,13 @@ const Header: React.FC = () => {
       gsap.to(rect, {
         strokeDashoffset: 0,
         duration: 2,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
         repeat: -1,
         yoyo: true,
       });
 
       gsap.to(rect, {
-        filter: 'url(#glow)',
+        filter: "url(#glow)",
         duration: 0.5,
         repeat: -1,
         yoyo: true,
@@ -107,7 +108,7 @@ const Header: React.FC = () => {
       className="bg-[#1A1A1A] text-white py-4 px-6 sticky top-0 z-50 border-b border-gray-700"
       initial={{ y: 10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo with AnimatedSVG */}
@@ -130,22 +131,22 @@ const Header: React.FC = () => {
           {navLinks.map((link, index) => (
             <div
               key={link.href}
-              className={`relative ${index < navLinks.length - 1 ? 'md:border-r border-gray-700 md:pr-6' : ''}`}
+              className={`relative ${index < navLinks.length - 1 ? "md:border-r border-gray-700 md:pr-6" : ""}`}
               onMouseEnter={() => link.subLinks && setIsAnimationsOpen(true)}
               onMouseLeave={() => link.subLinks && setIsAnimationsOpen(false)}
             >
               <Link
                 href={link.href}
                 className={`flex items-center transition-colors duration-200 text-lg ${
-                  link.label === 'Play'
-                    ? 'play-link'
-                    : 'text-gray-400 hover:text-pink-500 focus:text-pink-500'
+                  link.label === "Play"
+                    ? "play-link"
+                    : "text-gray-400 hover:text-pink-500 focus:text-pink-500"
                 }`}
                 aria-haspopup={!!link.subLinks}
                 aria-expanded={link.subLinks ? isAnimationsOpen : undefined}
-                ref={link.label === 'Play' ? desktopPlayLinkRef : null}
+                ref={link.label === "Play" ? desktopPlayLinkRef : null}
               >
-                {link.label === 'Play' ? (
+                {link.label === "Play" ? (
                   <>
                     <svg ref={desktopSvgRef} preserveAspectRatio="none">
                       <defs>
@@ -187,7 +188,7 @@ const Header: React.FC = () => {
                       {link.subLinks.map((subLink, subIndex) => (
                         <li
                           key={subLink.href}
-                          className={subIndex < link.subLinks.length - 1 ? 'border-b border-gray-700' : ''}
+                          className={subIndex < link.subLinks.length - 1 ? "border-b border-gray-700" : ""}
                         >
                           <Link
                             href={subLink.href}
@@ -236,12 +237,12 @@ const Header: React.FC = () => {
           <motion.nav
             className="md:hidden mt-4 flex flex-col space-y-4 bg-gray-800 border-t border-gray-700 py-4 px-6 rounded-b-lg"
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
             {navLinks.map((link, index) => (
-              <div key={link.href} className={index < navLinks.length - 1 ? 'border-b border-gray-700 pb-4' : ''}>
+              <div key={link.href} className={index < navLinks.length - 1 ? "border-b border-gray-700 pb-4" : ""}>
                 {link.subLinks ? (
                   <div>
                     <button
@@ -265,7 +266,7 @@ const Header: React.FC = () => {
                           {link.subLinks.map((subLink, subIndex) => (
                             <li
                               key={subLink.href}
-                              className={subIndex < link.subLinks.length - 1 ? 'border-b border-gray-700 pb-2' : ''}
+                              className={subIndex < link.subLinks.length - 1 ? "border-b border-gray-700 pb-2" : ""}
                             >
                               <Link
                                 href={subLink.href}
@@ -301,14 +302,14 @@ const Header: React.FC = () => {
                   <Link
                     href={link.href}
                     className={`text-lg transition-colors duration-200 ${
-                      link.label === 'Play'
-                        ? 'play-link'
-                        : 'text-gray-400 hover:text-pink-500 focus:text-pink-500'
+                      link.label === "Play"
+                        ? "play-link"
+                        : "text-gray-400 hover:text-pink-500 focus:text-pink-500"
                     }`}
                     onClick={() => setIsMenuOpen(false)}
-                    ref={link.label === 'Play' ? mobilePlayLinkRef : null}
+                    ref={link.label === "Play" ? mobilePlayLinkRef : null}
                   >
-                    {link.label === 'Play' ? (
+                    {link.label === "Play" ? (
                       <>
                         <svg ref={mobileSvgRef} preserveAspectRatio="none">
                           <defs>
