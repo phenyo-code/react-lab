@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import Footer from './components/Footer';
 import AnimatedSVG from './components/animations/AnimatedSVG';
+import Premium3D from './components/animations/Premium3D';
 
 
 const Home: React.FC = () => {
@@ -166,13 +167,22 @@ const Home: React.FC = () => {
       {/* Header */}
       <Header />
 
-      {/* Hero Section */}
-      <section className="py-24 px-6 text-center max-w-7xl mx-auto border-b border-gray-700">
 
-        <AnimatedScroll effect="slideInLeft" triggerPoint={0.1} duration={1000} className="flex flex-col items-center">
-          <AnimatedSVG
+            {/* Hero Section */}
+      <section className="relative pt-24 px-4 sm:px-6 md:px-8 max-w-[100vw] mx-auto border-b border-gray-700 overflow-hidden">
+        <div className="relative w-full h-[80vh] max-w-7xl mx-auto">
+          <div className="absolute inset-0 z-0">
+            <Premium3D className="w-4 h-full" />
+          </div>
+          <motion.div
+            className="relative z-10 flex flex-col items-center justify-center text-center h-full"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <AnimatedSVG
             text="React Animations"
-            effect="neonDraw"
+            effect="whiteNeonDraw"
             duration={Infinity}
             textColor="#ffffff"
             strokeColor="#ff6ac1"
@@ -180,15 +190,9 @@ const Home: React.FC = () => {
             fontSize="60px"
             fontFamily="Inter, Arial, sans-serif"
           />
-          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
-          <motion.p
-            className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto mb-8"
-            style={{ y: yRange, opacity: opacityRange }}
-          >
-            React Animations is a free, open-source library crafted for Next.js developers to effortlessly add dynamic, GPU-accelerated animations. Install with `npm install react-animations` to integrate lightweight, TypeScript-friendly text and scroll effects powered by Framer Motion and Lenis. Elevate your portfolios, e-commerce sites, dashboards, and interactive apps with professional-grade UI animations in minutes.
-          </motion.p>
-          <hr className="border-gray-700 mb-6 max-w-md mx-auto" />
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <p className="text-base md:text-lg text-gray-100 max-w-xl mb-6">
+             React Animations is a free, open-source library crafted for Next.js developers to effortlessly add dynamic, GPU-accelerated animations. 
+            </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/animations"
@@ -198,9 +202,11 @@ const Home: React.FC = () => {
                 Explore Animations
               </Link>
             </motion.div>
-          </div>
-        </AnimatedScroll>
+          </motion.div>
+        </div>
       </section>
+
+      
 
       {/* Introduction Section */}
       <section className="py-16 px-6 max-w-7xl mx-auto border-b border-gray-700" style={gradientBackground}>

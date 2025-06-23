@@ -8,7 +8,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Points, PointMaterial } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { Star } from "lucide-react";
+
 
 interface Premium3DProps {
   className?: string;
@@ -248,7 +248,6 @@ const Premium3D: React.FC<Premium3DProps> = ({ className = "" }) => {
         </EffectComposer>
       </Canvas>
       <div className="absolute top-4 right-4">
-        <Star className="w-6 h-6 text-pink-500" />
       </div>
     </div>
   );
