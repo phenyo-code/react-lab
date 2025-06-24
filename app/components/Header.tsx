@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
-import { Type, Mouse, PenTool, Box, Bot } from "lucide-react";
+import { Type, Mouse, PenTool, Box, Bot, Origami } from "lucide-react"; // Added Star import
 import Link from "next/link";
 import { motion, AnimatePresence, Variants, useInView } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         { href: "/animations/scroll", label: "Scroll", icon: Mouse },
         { href: "/animations/svg", label: "SVG", icon: PenTool },
         { href: "/animations/3d", label: "3D", icon: Box },
-        { href: "/animations/premium/3d", label: "Premium", icon: Box },
+        { href: "/animations/premium/3d", label: "Premium 3D", icon: Box },
         { href: "/animations/premium/robot", label: "Robot", icon: Bot },
       ],
     },
@@ -62,7 +62,7 @@ const Header: React.FC = () => {
     return () => lenis.destroy();
   }, []);
 
-  // Set SVG dimensions and animate border
+  // Set SVG dimensions and animate border for Play link
   useEffect(() => {
     const updateSvg = (
       svgRef: React.RefObject<SVGSVGElement>,
@@ -111,8 +111,20 @@ const Header: React.FC = () => {
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo with AnimatedSVG */}
-        <Link href="/" className="flex items-center">
+        {/* Logo with Animated Star Icon */}
+        <Link href="/" className="flex items-center gap-1">
+        <AnimatedSVG
+            type="icon"
+            effect="iconNeonDraw"
+            Icon={Origami}
+            strokeColor="#ff6ac1"
+            glowColor="rgba(255, 106, 193, 0.7)"
+            duration={Infinity}
+            delay={0.5}
+            className="w-6 h-6"
+            width={24}
+            height={24}
+          />
           <AnimatedSVG
             text="ReAnime"
             effect="neonDraw"
@@ -124,6 +136,7 @@ const Header: React.FC = () => {
             fontFamily="Inter, Arial, sans-serif"
             className="font-bold hover:text-purple-500 transition-colors duration-300 tracking-tight"
           />
+          
         </Link>
 
         {/* Desktop Nav */}

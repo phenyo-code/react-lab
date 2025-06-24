@@ -173,9 +173,6 @@ const Scrollpage: React.FC = () => {
               <hr className="border-gray-700 mb-2 max-w-xs mx-auto" />
               <p className="text-gray-400 text-sm max-w-xs">{description}</p>
               <hr className="border-gray-700 mt-2 max-w-xs mx-auto" />
-              <span className="text-[12px] text-gray-600 mt-2" aria-label={`Animation properties for ${title}`}>
-                effect="{scrollEffect}" triggerPoint={0.3 + index * 0.1} duration={1000}
-              </span>
             </AnimatedScroll>
           ))}
         </div>
