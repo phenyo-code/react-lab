@@ -181,7 +181,7 @@ const Home: React.FC = () => {
           >
             <AnimatedSVG
             text="React Animations"
-            effect="whiteNeonDraw"
+            effect="neonDraw"
             duration={Infinity}
             textColor="#ffffff"
             strokeColor="#ff6ac1"
