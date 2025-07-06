@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import Footer from './components/Footer';
 import AnimatedSVG from './components/animations/AnimatedSVG';
-import Premium3D from './components/animations/Premium3D';
+
 
 
 const Home: React.FC = () => {
@@ -172,7 +172,6 @@ const Home: React.FC = () => {
       <section className="relative pt-18 px-4 sm:px-6 md:px-8 max-w-[100vw] mx-auto border-b border-gray-700 overflow-hidden">
         <div className="relative w-full h-[80vh] max-w-7xl mx-auto">
           <div className="absolute inset-0 z-0">
-            <Premium3D className="w-4 h-full" />
           </div>
           <motion.div
             className="relative z-10 flex flex-col items-center justify-center text-center h-full"
