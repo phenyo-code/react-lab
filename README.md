@@ -12,7 +12,7 @@
 
 ---
 
-### 🔧 Built with the tools and technologies:
+### Built with the tools and technologies:
 
 <p>
   <img src="https://img.shields.io/badge/JSON-black?logo=json&style=for-the-badge" />
@@ -36,7 +36,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 - **Text Animations** – Smooth and customizable text animation effects.
 - **Scroll Animations** – Trigger animations based on scroll position with Lenis integration.
@@ -48,7 +48,7 @@
 
 ---
 
-## 📦 Technologies Used
+## Technologies Used
 
 | Category        | Technologies                                                                 |
 |----------------|-------------------------------------------------------------------------------|
