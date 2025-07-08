@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">ReAnime</h1>
 
-## Getting Started
+<p align="center">
+  <i>Lightweight Animation Library for Text, Scroll, and SVG</i>
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/badge/last%20commit-july-2ea44f?style=flat-square" />
+  <img src="https://img.shields.io/badge/typescript-95%25-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/languages-2-lightgrey?style=flat-square" />
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔧 Built with the tools and technologies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<p>
+  <img src="https://img.shields.io/badge/JSON-black?logo=json&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Markdown-black?logo=markdown&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/npm-red?logo=npm&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/PostCSS-dd3a0a?logo=postcss&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/React-61DAFB?logo=react&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?logo=framer&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/GSAP-88CE02?logo=greensock&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Three.js-000000?logo=threedotjs&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/React_Spring-9B59B6?logo=reactspring&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Konva-2D3748?logo=konva&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Lottie-FF6200?logo=lottiefiles&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Leva-00ADEF?logo=leva&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Zustand-2D3748?logo=zustand&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&style=for-the-badge" />
+</p>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Text Animations** – Smooth and customizable text animation effects.
+- **Scroll Animations** – Trigger animations based on scroll position with Lenis integration.
+- **SVG Animations** – Dynamic and performant SVG manipulation with Konva.
+- **Three.js Support** – Advanced 3D animations using React Three Fiber.
+- **Developer-Friendly API** – Chainable and intuitive API inspired by GSAP.
+- **Cross-Browser Compatibility** – Tested across major browsers for consistent performance.
+- **Lightweight Bundle** – Optimized for minimal bundle size with Rollup.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Technologies Used
 
-## Deploy on Vercel
+| Category        | Technologies                                                                 |
+|----------------|-------------------------------------------------------------------------------|
+| **Frontend**    | Next.js 15, Tailwind CSS, React, Framer Motion, React Spring, React Three Fiber, Konva, Lottie |
+| **Animation**   | GSAP, Three.js, React Three Drei, React Three Cannon, React Three Rapier, Leva |
+| **Utils**       | Zustand, Opentype.js, SVG-Parser                                             |
+| **CI/Formatting**| ESLint, PostCSS, Tailwind CSS                                               |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
